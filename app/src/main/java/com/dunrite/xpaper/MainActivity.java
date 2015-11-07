@@ -1,5 +1,8 @@
 package com.dunrite.xpaper;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,10 +19,23 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String MyPrefs = "MyPrefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
+        if (sp.getBoolean("first", false)) {
+            SharedPreferences.Editor editor = sp.edit();
+            //TODO: Change to false when done with intro
+            editor.putBoolean("first", false);
+            editor.commit();
+            Intent intent = new Intent(this, IntroActivity.class); //call Intro class
+            startActivity(intent);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

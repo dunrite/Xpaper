@@ -27,10 +27,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
-        if (sp.getBoolean("first", false)) {
+        if (!sp.getBoolean("first", false)) {
             SharedPreferences.Editor editor = sp.edit();
-            //TODO: Change to false when done with intro
-            editor.putBoolean("first", false);
+            editor.putBoolean("first", true);
             editor.commit();
             Intent intent = new Intent(this, IntroActivity.class); //call Intro class
             startActivity(intent);

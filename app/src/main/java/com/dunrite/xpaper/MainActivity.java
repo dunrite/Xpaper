@@ -15,11 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String MyPrefs = "MyPrefs";
+
+    //@InjectView(R.id.test_image)
+    ImageView testImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        testImage = (ImageView) findViewById(R.id.test_image);
+        Picasso.with(this).load(R.drawable.black).into(testImage);
     }
 
     @Override

@@ -4,23 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String MyPrefs = "MyPrefs";
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +40,48 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
-        ArrayList<Integer> myDataset = new ArrayList<>();
 
-        fetchWallpaperIDs(myDataset);
-        // specify an adapter
-        mAdapter = new RecAdapter(this, myDataset);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
-    /**
-     * fetchWallpaperIDs
-     * gets all of the IDs for each drawable in the drawable folder
-     * and inserts them into 'list'
-     */
-    public void fetchWallpaperIDs(ArrayList<Integer> list) {
-        Field[] ID_Fields = R.drawable.class.getFields();
-        for (int i = 0; i < ID_Fields.length; i++) {
-            String curr = ID_Fields[i].toString();
-            if (curr.contains("xpwall")) {
-                try {
-                    list.add(ID_Fields[i].getInt(null));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new WallsFragment(), "Wallpapers");
+        adapter.addFragment(new ColorsFragment(), "Colors");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 

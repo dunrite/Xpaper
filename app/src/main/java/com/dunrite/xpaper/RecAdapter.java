@@ -1,6 +1,5 @@
 package com.dunrite.xpaper;
 
-import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
  */
 public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     private static ArrayList<Integer> mDataset;
-    private final Activity context;
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
@@ -38,12 +36,14 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
         public String currentItem;
         public ImageView mImageView;
         public CardView container;
+        public Context context;
 
-        public ViewHolder(View v) {
+        public ViewHolder(Context c, View v) {
             super(v);
             mImageView = (ImageView) v.findViewById(R.id.bg_image);
             mImageView.setOnClickListener(this);
             container = (CardView) v.findViewById(R.id.card_view);
+            context = c;
         }
 
         @Override
@@ -94,9 +94,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecAdapter(Activity context, ArrayList<Integer> myDataset) {
+    public RecAdapter(ArrayList<Integer> myDataset) {
         mDataset = myDataset;
-        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -107,7 +106,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.card, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(parent.getContext(), v);
         return vh;
     }
 
@@ -116,8 +115,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Picasso.with(context).load(mDataset.get(position))
-                .resize(holder.container.getWidth() + 1, holder.container.getHeight() + 1)
+        Picasso.with(holder.context).load(mDataset.get(position))
+                .transform(new FitToTargetViewTransformation(holder.container))
                 .into(holder.mImageView);
         holder.currentItem = mDataset.get(position).toString();
         setAnimation(holder.container, position);
@@ -129,7 +128,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }

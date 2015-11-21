@@ -2,11 +2,14 @@ package com.dunrite.xpaper;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -14,10 +17,11 @@ import java.util.ArrayList;
  */
 public class ColorsFragment extends Fragment {
     Button frontButton, backButton, accentButton;
-    ArrayList<String> bColors = new ArrayList<>();
-    ArrayList<String> aColors = new ArrayList<>();
-    ArrayList<String> fColors = new ArrayList<>();
-
+    ImageView frontCirc, backCirc, accCirc;
+    ArrayList<Integer> bColors = new ArrayList<>();
+    ArrayList<Integer> aColors = new ArrayList<>();
+    String model = "PURE";
+    int test = 0;
     public ColorsFragment() {
         // Required empty public constructor
     }
@@ -37,11 +41,16 @@ public class ColorsFragment extends Fragment {
         backButton = (Button) rootView.findViewById(R.id.back_button);
         accentButton = (Button) rootView.findViewById(R.id.accent_button);
 
+        frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
+        backCirc = (ImageView) rootView.findViewById(R.id.back_circle);
+        accCirc = (ImageView) rootView.findViewById(R.id.accent_circle);
+
         //set up onClickListeners
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
 
+        fetchColors(bColors, model, "back");
 
         return rootView;
     }
@@ -62,7 +71,11 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener bHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            // it was the 2nd button
+            backCirc.setColorFilter(ContextCompat.getColor(getContext(), bColors.get(test)));
+            if (test < bColors.size() - 1)
+                test++;
+            else
+                test = 0;
         }
     };
 
@@ -75,5 +88,26 @@ public class ColorsFragment extends Fragment {
             // it was the 1st button
         }
     };
+
+    /**
+     * fetchColors
+     * gets all of the IDs for each color for specified 'model'
+     * and inserts them into 'list'
+     */
+    public void fetchColors(ArrayList<Integer> list, String model, String type) {
+        Field[] ID_Fields = R.color.class.getFields();
+        for (int i = 0; i < ID_Fields.length; i++) {
+            String curr = ID_Fields[i].toString();
+            if ("PURE".equals(model) && curr.contains("pure") ||
+                    "2014".equals(model) && curr.contains("x14") ||
+                    "2013".equals(model) && curr.contains("x13")) {
+                try {
+                    list.add(ID_Fields[i].getInt(null));
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

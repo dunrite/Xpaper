@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="models_array">
+        <item>Moto X Pure Edition</item>
+        <item>Moto X Style</item>
+        <item>Moto X 2013</item>
+        <item>Moto X 2014</item>
+        <item>Moto X Force</item>
+        <item>Moto X Play</item>
+    </string-array>
+</resources>

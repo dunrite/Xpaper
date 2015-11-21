@@ -62,4 +62,12 @@
         android:src="@drawable/circle"
         android:layout_toLeftOf="@id/accent_button"
         android:layout_below="@id/back_circle" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/model_spinner"
+        android:layout_above="@+id/front_circle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp" />
 </RelativeLayout>

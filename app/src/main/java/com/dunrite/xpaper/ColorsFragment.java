@@ -6,8 +6,10 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 public class ColorsFragment extends Fragment {
     Button frontButton, backButton, accentButton;
     ImageView frontCirc, backCirc, accCirc;
+    Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
     String model = "PURE";
@@ -44,6 +47,15 @@ public class ColorsFragment extends Fragment {
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
         backCirc = (ImageView) rootView.findViewById(R.id.back_circle);
         accCirc = (ImageView) rootView.findViewById(R.id.accent_circle);
+
+        modelSpinner = (Spinner) rootView.findViewById(R.id.model_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> modelAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.models_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        modelSpinner.setAdapter(modelAdapter);
 
         //set up onClickListeners
         frontButton.setOnClickListener(fHandler);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="winter-white">#cccccc</color>
+    <color name="black">#282828</color>
+    <color name="slate">#505156</color>
+    <color name="raspberry">#922c4c</color>
+    <color name="cabernet">#462b34</color>
+    <color name="lime">#84a82d</color>
+    <color name="turquoise">#258079</color>
+    <color name="dark_teal">#314c4b</color>
+    <color name="purple">#4814a0</color>
+    <color name="olive">#515a4e</color>
+    <color name="royal_blue">#353b55</color>
+    <color name="deep_sea_blue">#272e36</color>
+</resources>

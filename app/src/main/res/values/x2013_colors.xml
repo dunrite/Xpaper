@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue">#0085cf</color>
-    <color name="purple">#4814a0</color>
-    <color name="hunter_green">#004631</color>
-    <color name="dark_teal">#005960</color>
-    <color name="navy">#32435a</color>
-    <color name="turquoise">#00b1b1</color>
-    <color name="olive">#515a4e</color>
-    <color name="mint">#c2dbc5</color>
-    <color name="royal_blue">#164d8f</color>
-    <color name="spearmint">#00c473</color>
+    <color name="x13_blue">#0085cf</color>
+    <color name="x13_purple">#4814a0</color>
+    <color name="x13_hunter_green">#004631</color>
+    <color name="x13_dark_teal">#005960</color>
+    <color name="x13_navy">#32435a</color>
+    <color name="x13_turquoise">#00b1b1</color>
+    <color name="x13_olive">#515a4e</color>
+    <color name="x13_mint">#c2dbc5</color>
+    <color name="x13_royal_blue">#164d8f</color>
+    <color name="x13_spearmint">#00c473</color>
 
-    <color name="white">#f4f4f4</color>
-    <color name="black">#2c2f32</color>
-    <color name="cement">#c8cacc</color>
-    <color name="chalk">#f0f1f0</color>
+    <color name="x13_white">#f4f4f4</color>
+    <color name="x13_black">#2c2f32</color>
+    <color name="x13_cement">#c8cacc</color>
+    <color name="x13_chalk">#f0f1f0</color>
 
-    <color name="cherry">#ef3b4a</color>
-    <color name="lemon_lime">#0085cf</color>
-    <color name="violet">#e0e830</color>
-    <color name="crimson">#8a2731</color>
-    <color name="blush">#f2e4eb</color>
-    <color name="raspberry">#e0457b</color>
-    <color name="cabernet">#6b485e</color>
-    <color name="orange">#ff6d2d</color>
-    <color name="golden_yellow">#ffc82e</color>
-    <color name="red">#ae1932</color>
+    <color name="x13_cherry">#ef3b4a</color>
+    <color name="x13_lemon_lime">#0085cf</color>
+    <color name="x13_violet">#e0e830</color>
+    <color name="x13_crimson">#8a2731</color>
+    <color name="x13_blush">#f2e4eb</color>
+    <color name="x13_raspberry">#e0457b</color>
+    <color name="x13_cabernet">#6b485e</color>
+    <color name="x13_orange">#ff6d2d</color>
+    <color name="x13_golden_yellow">#ffc82e</color>
+    <color name="x13_red">#ae1932</color>
 </resources>

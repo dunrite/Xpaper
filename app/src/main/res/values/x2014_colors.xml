@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue">#0085cf</color>
-    <color name="purple">#4814a0</color>
-    <color name="olive">#515a4e</color>
-    <color name="dark_teal">#005960</color>
-    <color name="navy">#32435a</color>
-    <color name="royal_blue">#164d8f</color>
-    <color name="turquoise">#00b1b1</color>
+    <color name="x14_blue">#0085cf</color>
+    <color name="x14_purple">#4814a0</color>
+    <color name="x14_olive">#515a4e</color>
+    <color name="x14_dark_teal">#005960</color>
+    <color name="x14_navy">#32435a</color>
+    <color name="x14_royal_blue">#164d8f</color>
+    <color name="x14_turquoise">#00b1b1</color>
 
-    <color name="smoke">#413d38</color>
-    <color name="slate">#657283</color>
-    <color name="black">#282828</color>
-    <color name="chalk">#f0f1f0</color>
+    <color name="x14_smoke">#413d38</color>
+    <color name="x14_slate">#657283</color>
+    <color name="x14_black">#282828</color>
+    <color name="x14_chalk">#f0f1f0</color>
 
-    <color name="cabernet">#6b485e</color>
-    <color name="violet">#b13393</color>
-    <color name="crimson">#8a2731</color>
-    <color name="red">#ae1932</color>
-    <color name="raspberry">#e0457b</color>
-    <color name="spice">#be5122</color>
+    <color name="x14_cabernet">#6b485e</color>
+    <color name="x14_violet">#b13393</color>
+    <color name="x14_crimson">#8a2731</color>
+    <color name="x14_red">#ae1932</color>
+    <color name="x14_raspberry">#e0457b</color>
+    <color name="x14_spice">#be5122</color>
 </resources>

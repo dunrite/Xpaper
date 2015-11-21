@@ -5,8 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main"
     tools:context=".MainActivity">
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#fcfcfc"
+        android:text="Front"
+        android:id="@+id/front_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#fcfcfc"
+        android:text="Back"
+        android:id="@+id/back_button"
+        android:layout_below="@+id/front_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#fcfcfc"
+        android:text="Accent"
+        android:id="@+id/accent_button"
+        android:layout_below="@+id/back_button"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/front_circle"
+        android:src="@drawable/circle"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/front_button" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/back_circle"
+        android:src="@drawable/circle"
+        android:layout_toLeftOf="@id/back_button"
+        android:layout_below="@id/front_circle" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/accent_circle"
+        android:src="@drawable/circle"
+        android:layout_toLeftOf="@id/accent_button"
+        android:layout_below="@id/back_circle" />
 </RelativeLayout>

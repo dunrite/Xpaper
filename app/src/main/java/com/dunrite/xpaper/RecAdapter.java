@@ -2,8 +2,16 @@ package com.dunrite.xpaper;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,17 +21,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Recycler View Adapter to display all of the wallpapers in a list of cards
  */
 public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
-    private static ArrayList<Integer> mDataset;
+    private static ArrayList<HashMap<String,Integer>> mDataset;
+    private Context context;
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
@@ -94,8 +102,9 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecAdapter(ArrayList<Integer> myDataset) {
+    public RecAdapter( ArrayList<HashMap<String,Integer>> myDataset, Context context) {
         mDataset = myDataset;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -115,9 +124,23 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Picasso.with(holder.context).load(mDataset.get(position))
-                .transform(new FitToTargetViewTransformation(holder.container))
-                .into(holder.mImageView);
+
+//        Picasso.with(holder.context).load(mDataset.get(position))
+//                .transform(new FitToTargetViewTransformation(holder.container))
+//                .into(holder.mImageView);
+        HashMap<String,Integer> current = mDataset.get(position);
+
+        if(current.get("variant") == 1) {
+            holder.mImageView.setImageDrawable(combineImages(ContextCompat.getDrawable(context, current.get("background")),
+                    ContextCompat.getDrawable(context, current.get("foreground")),
+                    ContextCompat.getColor(context, R.color.pure_lime),
+                    ContextCompat.getColor(context, R.color.pure_raspberry)));
+        } else if (current.get("variant") == 2){
+            holder.mImageView.setImageDrawable(combineImages(ContextCompat.getDrawable(context, current.get("background")),
+                    ContextCompat.getDrawable(context, current.get("foreground")),
+                    ContextCompat.getColor(context, R.color.pure_raspberry),
+                    ContextCompat.getColor(context, R.color.pure_lime)));
+        }
         holder.currentItem = mDataset.get(position).toString();
         setAnimation(holder.container, position);
     }
@@ -132,6 +155,39 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+
+    public Drawable combineImages(Drawable backgroundParam, Drawable xParam, int color1, int color2) { // can add a 3rd parameter 'String loc' if you want to save the new image - left some code to do that at the bottom
+        Bitmap cs = null;
+
+        //convert from drawable to bitmap
+        Bitmap background = ((BitmapDrawable) backgroundParam).getBitmap();
+        background = background.copy(Bitmap.Config.ARGB_8888, true);
+
+        Bitmap x = ((BitmapDrawable) xParam).getBitmap();
+        x  = x.copy(Bitmap.Config.ARGB_8888, true);
+
+        //initialize Canvas
+        int width = background.getWidth();
+        int height = background.getHeight();
+        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas comboImage = new Canvas(cs);
+
+        //Filter for Background
+        Paint paint1 = new Paint();
+        paint1.setFilterBitmap(false);
+        paint1.setColorFilter(new PorterDuffColorFilter(color1, PorterDuff.Mode.OVERLAY));
+
+        //Filter for X
+        Paint paint2 = new Paint();
+        paint2.setFilterBitmap(false);
+        paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.MULTIPLY));
+
+        //Draw both images
+        comboImage.drawBitmap(background, 0, 0, paint1);
+        comboImage.drawBitmap(x, 0, 0, paint2);
+
+        return new BitmapDrawable(context.getResources(), cs);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

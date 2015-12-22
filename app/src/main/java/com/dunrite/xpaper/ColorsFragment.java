@@ -1,7 +1,9 @@
 package com.dunrite.xpaper;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment to house everything to do with displaying the list of wallpapers
@@ -69,10 +72,13 @@ public class ColorsFragment extends Fragment {
         accentButton.setOnClickListener(aHandler);
 
         fetchColors(bColors, model, "back");
+        int[] back = toIntArray(bColors, getContext());
 
-        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
-        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
-        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
+        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.front_color);
+        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.back_color)
+                .customColors(back, empty)
+                .allowUserColorInput(false);
+        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.accent_color);
 
         return rootView;
     }
@@ -130,7 +136,30 @@ public class ColorsFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles what happens when user selected a color
+     *
+     * @param dialog        which dialog they were in
+     * @param selectedColor the selected color
+     */
     public static void onColorSelection(ColorChooserDialog dialog, int selectedColor) {
 
+    }
+
+    /**
+     * Converts an Integer ArrayList into an int array
+     *
+     * @param list    the ArrayList needing conversion
+     * @param context the application context
+     * @return the final array
+     */
+    public static int[] toIntArray(List<Integer> list, Context context) {
+        int[] intArray = new int[list.size()];
+        int i = 0;
+
+        for (Integer integer : list)
+            intArray[i++] = ContextCompat.getColor(context, integer);
+
+        return intArray;
     }
 }

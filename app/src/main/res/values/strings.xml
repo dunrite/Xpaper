@@ -6,4 +6,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
+
+    <string name="back_color">Back Color</string>
+    <string name="front_color">Front Color</string>
+    <string name="accent_color">Accent Color</string>
 </resources>

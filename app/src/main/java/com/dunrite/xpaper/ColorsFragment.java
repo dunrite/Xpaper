@@ -2,7 +2,6 @@ package com.dunrite.xpaper;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,10 +24,15 @@ public class ColorsFragment extends Fragment {
     Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
+    int[][] empty = {};
     String model = "PURE";
     int test = 0;
+    public ColorChooserDialog.Builder frontChooser;
+    public ColorChooserDialog.Builder backChooser;
+    public ColorChooserDialog.Builder accentChooser;
+
     public ColorsFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -64,6 +70,10 @@ public class ColorsFragment extends Fragment {
 
         fetchColors(bColors, model, "back");
 
+        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
+        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
+        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.app_name);
+
         return rootView;
     }
 
@@ -73,6 +83,7 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener fHandler = new View.OnClickListener() {
         public void onClick(View v) {
+            frontChooser.show();
 
         }
     };
@@ -83,11 +94,8 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener bHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            backCirc.setColorFilter(ContextCompat.getColor(getContext(), bColors.get(test)));
-            if (test < bColors.size() - 1)
-                test++;
-            else
-                test = 0;
+            // backCirc.setColorFilter(ContextCompat.getColor(getContext(), bColors.get(test)));
+            backChooser.show();
         }
     };
 
@@ -97,7 +105,7 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener aHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            // it was the 1st button
+            accentChooser.show();
         }
     };
 
@@ -122,4 +130,7 @@ public class ColorsFragment extends Fragment {
         }
     }
 
+    public static void onColorSelection(ColorChooserDialog dialog, int selectedColor) {
+
+    }
 }

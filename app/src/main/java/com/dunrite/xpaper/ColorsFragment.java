@@ -1,12 +1,15 @@
 package com.dunrite.xpaper;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,9 +30,9 @@ public class ColorsFragment extends Fragment {
     Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
-    int[][] empty = {};
+    int[] front = {Color.BLACK, Color.WHITE};
     String model = "PURE";
-    int test = 0;
+    public static String lastPicked;
     public ColorChooserDialog.Builder frontChooser;
     public ColorChooserDialog.Builder backChooser;
     public ColorChooserDialog.Builder accentChooser;
@@ -65,24 +68,38 @@ public class ColorsFragment extends Fragment {
         modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         modelSpinner.setAdapter(modelAdapter);
+        modelSpinner.setOnItemSelectedListener(mHandler);
 
         //set up onClickListeners
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
 
-        fetchColors(bColors, model, "back");
-        int[] back = toIntArray(bColors, getContext());
-
-        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.front_color);
-        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.back_color)
-                .customColors(back, empty)
-                .allowUserColorInput(false);
-        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.accent_color);
+        resetColors();
 
         return rootView;
     }
 
+    public void resetColors() {
+        Log.d("Model", model);
+        bColors = new ArrayList<>();
+        aColors = new ArrayList<>();
+        fetchColors(bColors, model, "back");
+        int[] back = toIntArray(bColors, getContext());
+
+        fetchColors(aColors, model, "accent");
+        int[] accent = toIntArray(aColors, getContext());
+
+        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.front_color)
+                .customColors(front, null)
+                .allowUserColorInput(false);
+        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.back_color)
+                .customColors(back, null)
+                .allowUserColorInput(false);
+        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.accent_color)
+                .customColors(accent, null)
+                .allowUserColorInput(false);
+    }
     /**
      * fHandler
      * OnClickListener for front button
@@ -90,6 +107,37 @@ public class ColorsFragment extends Fragment {
     View.OnClickListener fHandler = new View.OnClickListener() {
         public void onClick(View v) {
             frontChooser.show();
+            lastPicked = "front";
+
+        }
+    };
+
+    AdapterView.OnItemSelectedListener mHandler = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0:
+                    model = "PURE";
+                    resetColors();
+                    return;
+                case 1:
+                    model = "PURE";
+                    resetColors();
+                    return;
+                case 2:
+                    model = "2013";
+                    resetColors();
+                    return;
+                case 3:
+                    model = "2014";
+                    resetColors();
+                    return;
+                default:
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
 
         }
     };
@@ -102,6 +150,7 @@ public class ColorsFragment extends Fragment {
         public void onClick(View v) {
             // backCirc.setColorFilter(ContextCompat.getColor(getContext(), bColors.get(test)));
             backChooser.show();
+            lastPicked = "back";
         }
     };
 
@@ -112,6 +161,7 @@ public class ColorsFragment extends Fragment {
     View.OnClickListener aHandler = new View.OnClickListener() {
         public void onClick(View v) {
             accentChooser.show();
+            lastPicked = "accent";
         }
     };
 
@@ -142,8 +192,20 @@ public class ColorsFragment extends Fragment {
      * @param dialog        which dialog they were in
      * @param selectedColor the selected color
      */
-    public static void onColorSelection(ColorChooserDialog dialog, int selectedColor) {
-
+    public void onColorSelection(ColorChooserDialog dialog, int selectedColor) {
+        switch (lastPicked) {
+            case "front":
+                frontCirc.setColorFilter(selectedColor);
+                return;
+            case "back":
+                backCirc.setColorFilter(selectedColor);
+                return;
+            case "accent":
+                accCirc.setColorFilter(selectedColor);
+                return;
+            default:
+                return;
+        }
     }
 
     /**

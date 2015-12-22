@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     public static final String MyPrefs = "MyPrefs";
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    ColorsFragment cfrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -59,11 +57,12 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         adapter.addFragment(new WallsFragment(), "Wallpaper");
         adapter.addFragment(new ColorsFragment(), "Colors");
         viewPager.setAdapter(adapter);
+        cfrag = (ColorsFragment) adapter.getFragment(1);
     }
 
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, int selectedColor) {
-        ColorsFragment.onColorSelection(dialog, selectedColor);
+        cfrag.onColorSelection(dialog, selectedColor);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -87,6 +86,10 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+        }
+
+        public Fragment getFragment(int i) {
+            return mFragmentList.get(i);
         }
 
         @Override

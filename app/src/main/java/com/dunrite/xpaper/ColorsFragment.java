@@ -1,6 +1,7 @@
 package com.dunrite.xpaper;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,7 @@ public class ColorsFragment extends Fragment {
     public ColorChooserDialog.Builder accentChooser;
 
     public ColorsFragment() {
-
+        //mandatory empty constructor
     }
 
     @Override
@@ -56,6 +57,7 @@ public class ColorsFragment extends Fragment {
         backButton = (Button) rootView.findViewById(R.id.back_button);
         accentButton = (Button) rootView.findViewById(R.id.accent_button);
 
+        //instantiate color circles
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
         backCirc = (ImageView) rootView.findViewById(R.id.back_circle);
         accCirc = (ImageView) rootView.findViewById(R.id.accent_circle);
@@ -74,7 +76,7 @@ public class ColorsFragment extends Fragment {
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
-
+        loadDeviceConfig();
         resetColors();
 
         return rootView;
@@ -119,18 +121,22 @@ public class ColorsFragment extends Fragment {
                 case 0:
                     model = "PURE";
                     resetColors();
+                    saveDeviceConfig(position, "model");
                     return;
                 case 1:
                     model = "PURE";
                     resetColors();
+                    saveDeviceConfig(position, "model");
                     return;
                 case 2:
                     model = "2013";
                     resetColors();
+                    saveDeviceConfig(position, "model");
                     return;
                 case 3:
                     model = "2014";
                     resetColors();
+                    saveDeviceConfig(position, "model");
                     return;
                 default:
             }
@@ -148,7 +154,6 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener bHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            // backCirc.setColorFilter(ContextCompat.getColor(getContext(), bColors.get(test)));
             backChooser.show();
             lastPicked = "back";
         }
@@ -196,12 +201,15 @@ public class ColorsFragment extends Fragment {
         switch (lastPicked) {
             case "front":
                 frontCirc.setColorFilter(selectedColor);
+                saveDeviceConfig(selectedColor, "front");
                 return;
             case "back":
                 backCirc.setColorFilter(selectedColor);
+                saveDeviceConfig(selectedColor, "back");
                 return;
             case "accent":
                 accCirc.setColorFilter(selectedColor);
+                saveDeviceConfig(selectedColor, "accent");
                 return;
             default:
                 return;
@@ -223,5 +231,35 @@ public class ColorsFragment extends Fragment {
             intArray[i++] = ContextCompat.getColor(context, integer);
 
         return intArray;
+    }
+
+    /**
+     * Saves device configuration for later
+     *
+     * @param param integer that will be the value stored
+     * @param type  determines what type of data is being saved
+     */
+    public void saveDeviceConfig(int param, String type) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(type, param);
+        editor.apply();
+    }
+
+    /**
+     * Loads device configuration from previous session
+     */
+    public void loadDeviceConfig() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int model = sharedPref.getInt("model", 0);
+        int front = sharedPref.getInt("front", 0);
+        int back = sharedPref.getInt("back", 0);
+        int accent = sharedPref.getInt("accent", 0);
+        //select correct model
+        modelSpinner.setSelection(model);
+        //fill circle colors
+        frontCirc.setColorFilter(front);
+        backCirc.setColorFilter(back);
+        accCirc.setColorFilter(accent);
     }
 }

@@ -1,0 +1,105 @@
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.\n
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <FrameLayout
+        android:id="@+id/framelayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:animateLayoutChanges="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logo"
+                android:layout_centerHorizontal="true"
+                android:text="@string/app_name"
+                android:textSize="@dimen/abc_text_size_headline_material" />
+
+            <TextView
+                android:id="@+id/versionNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:text="VERSION NUM HERE" />
+
+            <ImageView
+                android:id="@+id/a_dunrite_app"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/versionNum"
+                android:src="@drawable/adunriteapp" />
+
+            <TextView
+                android:id="@+id/separator"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/a_dunrite_app"
+                android:layout_centerHorizontal="true"
+                android:background="#f0a1a1a1" />
+
+            <TextView
+                android:id="@+id/made"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="@string/made_with_love"
+                android:textSize="@dimen/abc_text_size_title_material" />
+
+            <TextView
+                android:id="@+id/separator2"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/made"
+                android:layout_centerHorizontal="true"
+                android:background="#f0a1a1a1" />
+
+            <TextView
+                android:id="@+id/opensource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator2"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:text="@string/opensource"
+                android:textSize="@dimen/abc_text_size_title_material" />
+        </RelativeLayout>
+    </FrameLayout>
+</ScrollView>

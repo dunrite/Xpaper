@@ -116,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

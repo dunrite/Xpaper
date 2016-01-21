@@ -92,13 +92,13 @@ public class ColorsFragment extends Fragment {
         fetchColors(aColors, model, "accent");
         int[] accent = toIntArray(aColors, getContext());
 
-        frontChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.front_color)
+        frontChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.front_color)
                 .customColors(front, null)
                 .allowUserColorInput(false);
-        backChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.back_color)
+        backChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.back_color)
                 .customColors(back, null)
                 .allowUserColorInput(false);
-        accentChooser = new ColorChooserDialog.Builder((MainActivity) getActivity(), R.string.accent_color)
+        accentChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
                 .allowUserColorInput(false);
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    setAlpha has a range of 0-255, this is 50% -->
+    <integer name="status_bar_opacity">127</integer>
+    <integer name="max_color_range">255</integer>
+
+</resources>

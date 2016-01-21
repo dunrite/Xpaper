@@ -14,6 +14,8 @@
 
     <string name="made_with_love">Made with ♥ by \nJaxon Wright \nand \nChad Teitsma</string>
     <string name="opensource">Open-source libraries used:\n AppIntro by Paolo Rotolo\n Material Dialogs by Aidan Follestad\n Picasso by Square Up</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="color_settings">Color Settings</string>
 
 
 </resources>

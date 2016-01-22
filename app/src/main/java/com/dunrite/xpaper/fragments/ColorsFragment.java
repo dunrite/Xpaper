@@ -1,4 +1,4 @@
-package com.dunrite.xpaper;
+package com.dunrite.xpaper.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.activities.EditorActivity;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -92,13 +94,13 @@ public class ColorsFragment extends Fragment {
         fetchColors(aColors, model, "accent");
         int[] accent = toIntArray(aColors, getContext());
 
-        frontChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.front_color)
+        frontChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.front_color)
                 .customColors(front, null)
                 .allowUserColorInput(false);
-        backChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.back_color)
+        backChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.back_color)
                 .customColors(back, null)
                 .allowUserColorInput(false);
-        accentChooser = new ColorChooserDialog.Builder((Main2Activity) getActivity(), R.string.accent_color)
+        accentChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
                 .allowUserColorInput(false);
     }

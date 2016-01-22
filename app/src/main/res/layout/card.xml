@@ -2,12 +2,13 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="4dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_gravity="center"
-        android:layout_width="183dp"
+        android:layout_width="177dp"
         android:layout_height="100dp"
         android:layout_margin="4dp"
         android:clickable="true"
@@ -19,5 +20,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/locked_img"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:src="@drawable/ic_lock_24dp"
+            android:layout_marginBottom="20dp"
+            android:background="#b1ffffff" />
+
+        <TextView
+            android:id="@+id/cat_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/md_button_padding_vertical"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:background="@color/colorAccent" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

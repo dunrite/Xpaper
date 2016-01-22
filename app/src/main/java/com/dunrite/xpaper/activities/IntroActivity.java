@@ -1,9 +1,10 @@
-package com.dunrite.xpaper;
+package com.dunrite.xpaper.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.dunrite.xpaper.R;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
@@ -43,7 +44,7 @@ public class IntroActivity extends AppIntro2 {
 
     @Override
     public void onDonePressed() {
-        Intent intent = new Intent(this, MainActivity.class); //call Intro class
+        Intent intent = new Intent(this, EditorActivity.class); //call Intro class
         startActivity(intent);
     }
 }

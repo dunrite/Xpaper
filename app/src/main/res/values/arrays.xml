@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Wallpaper Category / Theme names-->
+    <!-- use '#' at beginning to signify as premium-->
+    <string-array name="categories">
+        <item>Basic X</item>
+        <item>Test Cat</item>
+        <item>#Premium Test Cat</item>
+    </string-array>
+
+    <!-- Category thumbnail previews-->
+    <array name="cat_thumbs">
+        <item>@drawable/basicx</item>
+        <item>@drawable/testcatblank</item>
+        <item>@drawable/testcat</item>
+
+    </array>
+
+</resources>

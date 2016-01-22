@@ -1,53 +1,20 @@
-package com.dunrite.xpaper;
+package com.dunrite.xpaper.utility;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.dunrite.xpaper.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Fragment to house everything to do with displaying the list of wallpapers
+ * Utility class for various common methods
  */
-public class WallsFragment extends Fragment {
+public class Utils {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-    public WallsFragment() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View rootView;
-        rootView = inflater.inflate(R.layout.content_main, container, false);
-
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        ArrayList<HashMap<String,Integer>> myDataset = new ArrayList<>();
-
-        fetchWallpaperIDs(myDataset);
-        // specify an adapter
-        mAdapter = new RecAdapter(myDataset, getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        // Inflate the layout for this fragment
-        return rootView;
+    /**
+     * Private empty constructor
+     */
+    private Utils() {
     }
 
     /**
@@ -77,8 +44,6 @@ public class WallsFragment extends Fragment {
                 }
             }
         }
-
-
         //for each background go through and add a hash map pair for each background and foreground pair
         for (int i = 0; i < backgroundList.size(); i++) {
             for (int j = 0; j < foregroundList.size(); j++) {

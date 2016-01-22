@@ -1,4 +1,4 @@
-package com.dunrite.xpaper;
+package com.dunrite.xpaper.activities;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -7,6 +7,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.dunrite.xpaper.R;
 
 public class AboutActivity extends AppCompatActivity {
 

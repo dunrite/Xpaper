@@ -16,6 +16,10 @@
     <string name="opensource">Open-source libraries used:\n AppIntro by Paolo Rotolo\n Material Dialogs by Aidan Follestad\n Picasso by Square Up</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="color_settings">Color Settings</string>
+    <string name="placeholder_text">placeholder text</string>
+    <string name="wallpaper_preview">Wallpaper Preview</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

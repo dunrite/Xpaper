@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.activities.EditorActivity;
+import com.dunrite.xpaper.utility.Utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -84,6 +85,10 @@ public class ColorsFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Resets the color options in the color pickers This is useful for when the user changes what
+     * model they are using.
+     */
     public void resetColors() {
         Log.d("Model", model);
         bColors = new ArrayList<>();
@@ -104,17 +109,6 @@ public class ColorsFragment extends Fragment {
                 .customColors(accent, null)
                 .allowUserColorInput(false);
     }
-    /**
-     * fHandler
-     * OnClickListener for front button
-     */
-    View.OnClickListener fHandler = new View.OnClickListener() {
-        public void onClick(View v) {
-            frontChooser.show();
-            lastPicked = "front";
-
-        }
-    };
 
     AdapterView.OnItemSelectedListener mHandler = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -123,22 +117,22 @@ public class ColorsFragment extends Fragment {
                 case 0:
                     model = "PURE";
                     resetColors();
-                    saveDeviceConfig(position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model");
                     return;
                 case 1:
-                    model = "PURE";
+                    model = "PURE"; //The Style is essentially the same as the Pure
                     resetColors();
-                    saveDeviceConfig(position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model");
                     return;
                 case 2:
                     model = "2013";
                     resetColors();
-                    saveDeviceConfig(position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model");
                     return;
                 case 3:
                     model = "2014";
                     resetColors();
-                    saveDeviceConfig(position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model");
                     return;
                 default:
             }
@@ -146,6 +140,18 @@ public class ColorsFragment extends Fragment {
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    /**
+     * fHandler
+     * OnClickListener for front button
+     */
+    View.OnClickListener fHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            frontChooser.show();
+            lastPicked = "front";
 
         }
     };
@@ -203,18 +209,17 @@ public class ColorsFragment extends Fragment {
         switch (lastPicked) {
             case "front":
                 frontCirc.setColorFilter(selectedColor);
-                saveDeviceConfig(selectedColor, "front");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "front");
                 return;
             case "back":
                 backCirc.setColorFilter(selectedColor);
-                saveDeviceConfig(selectedColor, "back");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "back");
                 return;
             case "accent":
                 accCirc.setColorFilter(selectedColor);
-                saveDeviceConfig(selectedColor, "accent");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "accent");
                 return;
             default:
-                return;
         }
     }
 
@@ -233,19 +238,6 @@ public class ColorsFragment extends Fragment {
             intArray[i++] = ContextCompat.getColor(context, integer);
 
         return intArray;
-    }
-
-    /**
-     * Saves device configuration for later
-     *
-     * @param param integer that will be the value stored
-     * @param type  determines what type of data is being saved
-     */
-    public void saveDeviceConfig(int param, String type) {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(type, param);
-        editor.apply();
     }
 
     /**

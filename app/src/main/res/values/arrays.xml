@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Device Models Available-->
+    <string-array name="models_array">
+        <item>Moto X Pure Edition</item>
+        <item>Moto X Style</item>
+        <item>Moto X 2013</item>
+        <item>Moto X 2014</item>
+        <!--<item>Moto X Force</item>-->
+        <!--<item>Moto X Play</item>-->
+    </string-array>
+
     <!-- Wallpaper Category / Theme names-->
     <!-- use '#' at beginning to signify as premium-->
     <string-array name="categories">
@@ -14,7 +24,12 @@
         <item>@drawable/basicx</item>
         <item>@drawable/testcatblank</item>
         <item>@drawable/testcat</item>
-
     </array>
 
+    <!-- Color options for wallpaper editing-->
+    <string-array name="color_option_array">
+        <item>Front Color</item>
+        <item>Back Color</item>
+        <item>Accent Color</item>
+    </string-array>
 </resources>

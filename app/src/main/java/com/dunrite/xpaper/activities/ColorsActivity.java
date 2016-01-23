@@ -33,7 +33,8 @@ public class ColorsActivity extends AppCompatActivity implements ColorChooserDia
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
+        overridePendingTransition(R.anim.stay_still, R.anim.pull_out_top);
     }
+
 }

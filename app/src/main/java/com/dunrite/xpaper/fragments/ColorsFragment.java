@@ -218,7 +218,6 @@ public class ColorsFragment extends Fragment {
         }
     }
 
-
     /**
      * Loads device configuration and colors the previews
      */

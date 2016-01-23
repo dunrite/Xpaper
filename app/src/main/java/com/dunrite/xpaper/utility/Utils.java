@@ -3,7 +3,6 @@ package com.dunrite.xpaper.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-
 import android.support.v4.content.ContextCompat;
 
 import com.dunrite.xpaper.R;
@@ -33,7 +31,7 @@ public class Utils {
     }
 
     /**
-     * Returns stored model value
+     * Returns stored model value for the spinner in the ColorsFragment
      *
      * @param a activity calling
      * @return integer value of model
@@ -74,6 +72,28 @@ public class Utils {
     public static int getBackColor(Activity a) {
         SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
         return sharedPref.getInt("back", 0);
+    }
+
+    /**
+     * Returns stored value set for bgColor (0=front, 1=back, 2=accent)
+     *
+     * @param a
+     * @return
+     */
+    public static int getBackgroundColor(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("bgColor", 0);
+    }
+
+    /**
+     * Returns stored value set for fgColor (0=front, 1=back, 2=accent)
+     *
+     * @param a
+     * @return
+     */
+    public static int getForegroundColor(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("fgColor", 0);
     }
 
     /**

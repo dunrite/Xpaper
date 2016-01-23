@@ -1,11 +1,8 @@
 package com.dunrite.xpaper.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +15,11 @@ import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.xpaper.R;
-import com.dunrite.xpaper.activities.EditorActivity;
+import com.dunrite.xpaper.activities.ColorsActivity;
 import com.dunrite.xpaper.utility.Utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Fragment to house everything to do with displaying the list of wallpapers
@@ -53,7 +49,7 @@ public class ColorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.content_colors, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_colors, container, false);
 
         //instantiate buttons
         frontButton = (Button) rootView.findViewById(R.id.front_button);
@@ -79,7 +75,7 @@ public class ColorsFragment extends Fragment {
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
-        loadDeviceConfig();
+        colorPreviews();
         resetColors();
 
         return rootView;
@@ -94,18 +90,17 @@ public class ColorsFragment extends Fragment {
         bColors = new ArrayList<>();
         aColors = new ArrayList<>();
         fetchColors(bColors, model, "back");
-        int[] back = toIntArray(bColors, getContext());
+        int[] back = Utils.toIntArray(bColors, getContext());
 
         fetchColors(aColors, model, "accent");
-        int[] accent = toIntArray(aColors, getContext());
-
-        frontChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.front_color)
+        int[] accent = Utils.toIntArray(aColors, getContext());
+        frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
                 .customColors(front, null)
                 .allowUserColorInput(false);
-        backChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.back_color)
+        backChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.back_color)
                 .customColors(back, null)
                 .allowUserColorInput(false);
-        accentChooser = new ColorChooserDialog.Builder((EditorActivity) getActivity(), R.string.accent_color)
+        accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
                 .allowUserColorInput(false);
     }
@@ -223,37 +218,16 @@ public class ColorsFragment extends Fragment {
         }
     }
 
-    /**
-     * Converts an Integer ArrayList into an int array
-     *
-     * @param list    the ArrayList needing conversion
-     * @param context the application context
-     * @return the final array
-     */
-    public static int[] toIntArray(List<Integer> list, Context context) {
-        int[] intArray = new int[list.size()];
-        int i = 0;
-
-        for (Integer integer : list)
-            intArray[i++] = ContextCompat.getColor(context, integer);
-
-        return intArray;
-    }
 
     /**
-     * Loads device configuration from previous session
+     * Loads device configuration and colors the previews
      */
-    public void loadDeviceConfig() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        int model = sharedPref.getInt("model", 0);
-        int front = sharedPref.getInt("front", 0);
-        int back = sharedPref.getInt("back", 0);
-        int accent = sharedPref.getInt("accent", 0);
+    public void colorPreviews() {
         //select correct model
-        modelSpinner.setSelection(model);
+        modelSpinner.setSelection(Utils.getModel(getActivity()));
         //fill circle colors
-        frontCirc.setColorFilter(front);
-        backCirc.setColorFilter(back);
-        accCirc.setColorFilter(accent);
+        frontCirc.setColorFilter(Utils.getFrontColor(getActivity()));
+        backCirc.setColorFilter(Utils.getBackColor(getActivity()));
+        accCirc.setColorFilter(Utils.getAccentColor(getActivity()));
     }
 }

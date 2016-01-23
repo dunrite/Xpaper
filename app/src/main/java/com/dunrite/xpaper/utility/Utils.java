@@ -3,6 +3,13 @@ package com.dunrite.xpaper.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.dunrite.xpaper.R;
 
@@ -64,7 +71,7 @@ public class Utils {
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
-            } else if (curr.contains("xpforeground")){
+            } else if (curr.contains("xpforeground")) {
                 try {
                     foregroundList.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -76,13 +83,13 @@ public class Utils {
         for (int i = 0; i < backgroundList.size(); i++) {
             for (int j = 0; j < foregroundList.size(); j++) {
                 //variant 1
-                HashMap<String,Integer> map1 = new HashMap<>();
+                HashMap<String, Integer> map1 = new HashMap<>();
                 map1.put("background", backgroundList.get(i));
                 map1.put("foreground", foregroundList.get(j));
                 map1.put("variant", 1);
 
                 //variant 2
-                HashMap<String,Integer> map2 = new HashMap<>();
+                HashMap<String, Integer> map2 = new HashMap<>();
                 map2.put("background", backgroundList.get(i));
                 map2.put("foreground", foregroundList.get(j));
                 map2.put("variant", 2);
@@ -91,5 +98,39 @@ public class Utils {
                 list.add(map2);
             }
         }
+
+    }
+    // can add a 3rd parameter 'String loc' if you want to save the new image - left some code to do that at the bottom
+    public static Drawable combineImages (Drawable background, Drawable foreground, int color1, int color2, Context context) {
+        Bitmap cs = null;
+
+        //convert from drawable to bitmap
+        Bitmap back = ((BitmapDrawable) background).getBitmap();
+        back = back.copy(Bitmap.Config.ARGB_8888, true);
+
+        Bitmap x = ((BitmapDrawable) foreground).getBitmap();
+        x = x.copy(Bitmap.Config.ARGB_8888, true);
+
+        //initialize Canvas
+        int width = back.getWidth();
+        int height = back.getHeight();
+        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas comboImage = new Canvas(cs);
+
+        //Filter for Background
+        Paint paint1 = new Paint();
+        paint1.setFilterBitmap(false);
+        paint1.setColorFilter(new PorterDuffColorFilter(color1, PorterDuff.Mode.SRC_ATOP));
+
+        //Filter for X
+        Paint paint2 = new Paint();
+        paint2.setFilterBitmap(false);
+        paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
+
+        //Draw both images
+        comboImage.drawBitmap(back, 0, 0, paint1);
+        comboImage.drawBitmap(x, 0, 0, paint2);
+
+        return new BitmapDrawable(context.getResources(), cs);
     }
 }

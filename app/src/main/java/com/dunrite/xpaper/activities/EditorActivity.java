@@ -3,16 +3,19 @@ package com.dunrite.xpaper.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.xpaper.R;
@@ -20,6 +23,7 @@ import com.dunrite.xpaper.adapters.ViewPagerAdapter;
 import com.dunrite.xpaper.fragments.ColorsFragment;
 import com.dunrite.xpaper.fragments.WallCatFragment;
 import com.dunrite.xpaper.fragments.WallConfigFragment;
+import com.dunrite.xpaper.utility.Utils;
 
 public class EditorActivity extends AppCompatActivity implements ColorChooserDialog.ColorCallback {
 
@@ -28,6 +32,10 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
     private ViewPager viewPager;
     private FloatingActionButton fab;
     ColorsFragment cfrag;
+
+    private ImageView wallPreview;
+    private Drawable background;
+    private Drawable foreground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,17 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
             }
         });
 
+        wallPreview = (ImageView) findViewById(R.id.wall_preview);
+
+        //HARDCODED FOR TESTING PURPOSES
+        background = ContextCompat.getDrawable(this, R.drawable.gray_xpbackground);
+        foreground = ContextCompat.getDrawable(this, R.drawable.grey_x_xpforeground);
+        int front = sp.getInt("front", ContextCompat.getColor(this,R.color.pure_lime));
+        int back = sp.getInt("back", ContextCompat.getColor(this,R.color.pure_raspberry));
+        //int accent = sharedPref.getInt("accent", 0);
+        //HARDCODED FOR TESTING PURPOSES
+
+        wallPreview.setImageDrawable(Utils.combineImages(background,foreground,front,back,this));
     }
 
     /**

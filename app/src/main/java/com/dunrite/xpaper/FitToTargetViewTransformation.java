@@ -36,4 +36,6 @@ public class FitToTargetViewTransformation implements Transformation {
     public String key() {
         return "transformation" + " desiredWidth";
     }
+
+
 }

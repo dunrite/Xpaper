@@ -3,6 +3,7 @@ package com.dunrite.xpaper.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,11 +12,14 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import android.support.v4.content.ContextCompat;
+
 import com.dunrite.xpaper.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Utility class for various common methods
@@ -26,6 +30,50 @@ public class Utils {
      * Private empty constructor
      */
     private Utils() {
+    }
+
+    /**
+     * Returns stored model value
+     *
+     * @param a activity calling
+     * @return integer value of model
+     */
+    public static int getModel(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("model", 0);
+    }
+
+    /**
+     * Returns stored front color value
+     *
+     * @param a activity calling
+     * @return integer value of front
+     */
+    public static int getFrontColor(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("front", 0);
+    }
+
+    /**
+     * Returns stored accent value
+     *
+     * @param a activity calling
+     * @return integer value of accent
+     */
+    public static int getAccentColor(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("accent", 0);
+    }
+
+    /**
+     * Returns stored back value
+     *
+     * @param a activity calling
+     * @return integer value of back
+     */
+    public static int getBackColor(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getInt("back", 0);
     }
 
     /**
@@ -50,6 +98,23 @@ public class Utils {
     public static boolean getPremiumStatus(Activity a) {
         SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
         return sharedPref.getBoolean("premium", false);
+    }
+
+    /**
+     * Converts an Integer ArrayList into an int array
+     *
+     * @param list    the ArrayList needing conversion
+     * @param context the application context
+     * @return the final array
+     */
+    public static int[] toIntArray(List<Integer> list, Context context) {
+        int[] intArray = new int[list.size()];
+        int i = 0;
+
+        for (Integer integer : list)
+            intArray[i++] = ContextCompat.getColor(context, integer);
+
+        return intArray;
     }
 
     /**

@@ -115,8 +115,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         int id = item.getItemId();
 
         if (id == R.id.color_settings) {
-            //TODO: Make this do something
-            return true;
+            Intent intent = new Intent(this, ColorsActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.pull_in_top, R.anim.stay_still);
         }
 
         if (id == R.id.action_settings) {

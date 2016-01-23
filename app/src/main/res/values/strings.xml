@@ -25,5 +25,6 @@
     <string name="colors">Colors</string>
     <string name="background">Background</string>
     <string name="foreground">Foreground</string>
+    <string name="gradient">Gradient</string>
 
 </resources>

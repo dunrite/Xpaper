@@ -43,7 +43,7 @@ public class WallConfigFragment extends Fragment {
         bgSpinner = (AppCompatSpinner) v.findViewById(R.id.background_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         SpinnerAdapter bgAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.color_option_array, android.R.layout.simple_spinner_item);
+                R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
 
         bgSpinner.setAdapter(bgAdapter);
         bgSpinner.setOnItemSelectedListener(bgHandler);
@@ -53,7 +53,7 @@ public class WallConfigFragment extends Fragment {
         fgSpinner = (AppCompatSpinner) v.findViewById(R.id.foreground_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         SpinnerAdapter fgAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.color_option_array, android.R.layout.simple_spinner_item);
+                R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
 
         fgSpinner.setAdapter(fgAdapter);
         fgSpinner.setOnItemSelectedListener(fgHandler);

@@ -44,7 +44,7 @@ public class WallCatFragment extends Fragment {
         int[] myThumbs = getThumbs();
 
         // specify an adapter
-        mAdapter = new RecAdapter(myCategories, myThumbs, getContext());
+        mAdapter = new RecAdapter(myCategories, myThumbs);
         mRecyclerView.setAdapter(mAdapter);
         // Inflate the layout for this fragment
         return rootView;

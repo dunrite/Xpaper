@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso;
 public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     private static String[] mCats;
     private static int[] mThumbs;
-    private Context context;
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
@@ -56,10 +55,9 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecAdapter(String[] catNames, int[] catThumbs, Context context) {
+    public RecAdapter(String[] catNames, int[] catThumbs) {
         mCats = catNames;
         mThumbs = catThumbs;
-        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)

@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -132,9 +131,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
      */
     public void updatePreview() {
         wallPreview = (ImageView) findViewById(R.id.wall_preview);
-        Log.d("frontColor Editor", "" + Utils.getFrontColor(this) + "\n" + R.color.black);
         int foregroundCol = 0;
         int backgroundCol = 0;
+        //Determine which drawable to use as background (before colorization)
         switch (Utils.getBackgroundColor(this)) {
             case 0: //front
                 if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))
@@ -150,6 +149,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 background = ContextCompat.getDrawable(this, R.drawable.gray_xpbackground);
                 backgroundCol = Utils.getAccentColor(this);
         }
+        //Determine which drawable to use as foreground (before colorization
         switch (Utils.getForegroundColor(this)) {
             case 0: //front
                 if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))

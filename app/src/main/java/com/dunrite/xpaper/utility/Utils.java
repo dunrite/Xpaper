@@ -12,11 +12,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
-import com.dunrite.xpaper.R;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,6 +24,11 @@ public class Utils {
      */
     private Utils() {
     }
+
+
+    /*****************************************************************************
+     * Getters
+     *****************************************************************************/
 
     /**
      * Returns stored model value for the spinner in the ColorsFragment
@@ -77,8 +77,8 @@ public class Utils {
     /**
      * Returns stored value set for bgColor (0=front, 1=back, 2=accent)
      *
-     * @param a
-     * @return
+     * @param a the current activity
+     * @return background color value
      */
     public static int getBackgroundColor(Activity a) {
         SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
@@ -88,13 +88,29 @@ public class Utils {
     /**
      * Returns stored value set for fgColor (0=front, 1=back, 2=accent)
      *
-     * @param a
-     * @return
+     * @param a the current activity
+     * @return background color value
      */
     public static int getForegroundColor(Activity a) {
         SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getInt("fgColor", 1);
+        return sharedPref.getInt("fgColor", 1); //defaults to back color
     }
+
+    /**
+     * Checks if user has purchased a premium license or not
+     *
+     * @param a the current activity
+     * @return premium status as a boolean
+     */
+    public static boolean getPremiumStatus(Activity a) {
+        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("premium", false);
+    }
+
+
+    /*****************************************************************************
+     * Saving
+     *****************************************************************************/
 
     /**
      * Saves device configuration for later
@@ -110,83 +126,26 @@ public class Utils {
         editor.apply();
     }
 
+
+    /*****************************************************************************
+     * Image Processing
+     *****************************************************************************/
+
     /**
-     * Checks if user has purchased a premium license or not
+     * Combines two images into one while also coloring each seperate image
      *
-     * @return premium status as a boolean
-     */
-    public static boolean getPremiumStatus(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getBoolean("premium", false);
-    }
-
-    /**
-     * Converts an Integer ArrayList into an int array
+     * @param background the main background drawable
+     * @param foreground the drawable in the front of the backgoround
+     * @param color1 color to change background to
+     * @param color2 color to change foreground to
+     * @param context current context
+     * @return colorized and combined drawable
      *
-     * @param list    the ArrayList needing conversion
-     * @param context the application context
-     * @return the final array
+     * can add a 3rd parameter 'String loc' if you want to save the new image.
+     * left some code to do that at the bottom
      */
-    public static int[] toIntArray(List<Integer> list, Context context) {
-        int[] intArray = new int[list.size()];
-        int i = 0;
-
-        for (Integer integer : list)
-            intArray[i++] = ContextCompat.getColor(context, integer);
-
-        return intArray;
-    }
-
-    /**
-     * fetchWallpaperIDs
-     * gets all of the IDs for each drawable in the drawable folder
-     * and inserts them into 'list'
-     */
-    public static void fetchWallpaperIDs(ArrayList<HashMap<String, Integer>> list) {
-        Field[] ID_Fields = R.drawable.class.getFields();
-        ArrayList<Integer> backgroundList = new ArrayList<>();
-        ArrayList<Integer> foregroundList = new ArrayList<>();
-
-        //create background and foreground list based on resource name
-        for (int i = 0; i < ID_Fields.length; i++) {
-            String curr = ID_Fields[i].toString();
-            if (curr.contains("xpbackground")) {
-                try {
-                    backgroundList.add(ID_Fields[i].getInt(null));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            } else if (curr.contains("xpforeground")) {
-                try {
-                    foregroundList.add(ID_Fields[i].getInt(null));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        //for each background go through and add a hash map pair for each background and foreground pair
-        for (int i = 0; i < backgroundList.size(); i++) {
-            for (int j = 0; j < foregroundList.size(); j++) {
-                //variant 1
-                HashMap<String, Integer> map1 = new HashMap<>();
-                map1.put("background", backgroundList.get(i));
-                map1.put("foreground", foregroundList.get(j));
-                map1.put("variant", 1);
-
-                //variant 2
-                HashMap<String, Integer> map2 = new HashMap<>();
-                map2.put("background", backgroundList.get(i));
-                map2.put("foreground", foregroundList.get(j));
-                map2.put("variant", 2);
-
-                list.add(map1);
-                list.add(map2);
-            }
-        }
-
-    }
-    // can add a 3rd parameter 'String loc' if you want to save the new image - left some code to do that at the bottom
-    public static Drawable combineImages (Drawable background, Drawable foreground, int color1, int color2, Context context) {
+    public static Drawable combineImages(Drawable background, Drawable foreground,
+                                         int color1, int color2, Context context) {
         Bitmap cs = null;
 
         //convert from drawable to bitmap
@@ -207,7 +166,7 @@ public class Utils {
         paint1.setFilterBitmap(false);
         paint1.setColorFilter(new PorterDuffColorFilter(color1, PorterDuff.Mode.SRC_ATOP));
 
-        //Filter for X
+        //Filter for Foreground
         Paint paint2 = new Paint();
         paint2.setFilterBitmap(false);
         paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
@@ -217,5 +176,27 @@ public class Utils {
         comboImage.drawBitmap(x, 0, 0, paint2);
 
         return new BitmapDrawable(context.getResources(), cs);
+    }
+
+
+    /*****************************************************************************
+     * Misc
+     *****************************************************************************/
+
+    /**
+     * Converts an Integer ArrayList into an int array
+     *
+     * @param list    the ArrayList needing conversion
+     * @param context the application context
+     * @return the final array
+     */
+    public static int[] toIntArray(List<Integer> list, Context context) {
+        int[] intArray = new int[list.size()];
+        int i = 0;
+
+        for (Integer integer : list)
+            intArray[i++] = ContextCompat.getColor(context, integer);
+
+        return intArray;
     }
 }

@@ -93,7 +93,7 @@ public class Utils {
      */
     public static int getForegroundColor(Activity a) {
         SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getInt("fgColor", 0);
+        return sharedPref.getInt("fgColor", 1);
     }
 
     /**

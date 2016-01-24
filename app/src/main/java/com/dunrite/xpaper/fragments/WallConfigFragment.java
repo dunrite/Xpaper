@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
 import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.utility.Utils;
 
 /**
@@ -19,12 +20,15 @@ import com.dunrite.xpaper.utility.Utils;
  */
 public class WallConfigFragment extends Fragment {
     private AppCompatSpinner bgSpinner, fgSpinner;
+    private EditorActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView;
         rootView = inflater.inflate(R.layout.fragment_wall_config, container, false);
+
+        activity = (EditorActivity) getActivity();
 
         setupSpinners(rootView);
 
@@ -75,7 +79,8 @@ public class WallConfigFragment extends Fragment {
     AdapterView.OnItemSelectedListener bgHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Utils.saveDeviceConfig(getActivity(), position, "bgColor");
+            Utils.saveDeviceConfig(getActivity(), position, "bgColor", "WALL_CONFIG");
+            activity.updatePreview();
         }
 
         @Override
@@ -90,7 +95,8 @@ public class WallConfigFragment extends Fragment {
     AdapterView.OnItemSelectedListener fgHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Utils.saveDeviceConfig(getActivity(), position, "fgColor");
+            Utils.saveDeviceConfig(getActivity(), position, "fgColor", "WALL_CONFIG");
+            activity.updatePreview();
         }
 
         @Override

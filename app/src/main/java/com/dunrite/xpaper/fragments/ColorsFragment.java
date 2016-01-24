@@ -112,22 +112,22 @@ public class ColorsFragment extends Fragment {
                 case 0:
                     model = "PURE";
                     resetColors();
-                    Utils.saveDeviceConfig(getActivity(), position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
                     return;
                 case 1:
                     model = "PURE"; //The Style is essentially the same as the Pure
                     resetColors();
-                    Utils.saveDeviceConfig(getActivity(), position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
                     return;
                 case 2:
                     model = "2013";
                     resetColors();
-                    Utils.saveDeviceConfig(getActivity(), position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
                     return;
                 case 3:
                     model = "2014";
                     resetColors();
-                    Utils.saveDeviceConfig(getActivity(), position, "model");
+                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
                     return;
                 default:
             }
@@ -204,15 +204,15 @@ public class ColorsFragment extends Fragment {
         switch (lastPicked) {
             case "front":
                 frontCirc.setColorFilter(selectedColor);
-                Utils.saveDeviceConfig(getActivity(), selectedColor, "front");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "front", "COLORS");
                 return;
             case "back":
                 backCirc.setColorFilter(selectedColor);
-                Utils.saveDeviceConfig(getActivity(), selectedColor, "back");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "back", "COLORS");
                 return;
             case "accent":
                 accCirc.setColorFilter(selectedColor);
-                Utils.saveDeviceConfig(getActivity(), selectedColor, "accent");
+                Utils.saveDeviceConfig(getActivity(), selectedColor, "accent", "COLORS");
                 return;
             default:
         }

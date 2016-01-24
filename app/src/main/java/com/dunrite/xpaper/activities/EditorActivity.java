@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,13 +38,14 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
     private ImageView wallPreview;
     private Drawable background;
     private Drawable foreground;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
+        sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
 
         //Starts IntroActivity if this is the first launch of app
         if (!sp.getBoolean("first", false)) {
@@ -74,17 +76,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
             }
         });
 
-        wallPreview = (ImageView) findViewById(R.id.wall_preview);
-
-        //HARDCODED FOR TESTING PURPOSES
-        background = ContextCompat.getDrawable(this, R.drawable.gray_xpbackground);
-        foreground = ContextCompat.getDrawable(this, R.drawable.grey_x_xpforeground);
-        int front = sp.getInt("front", ContextCompat.getColor(this,R.color.pure_lime));
-        int back = sp.getInt("back", ContextCompat.getColor(this,R.color.pure_raspberry));
-        //int accent = sharedPref.getInt("accent", 0);
-        //HARDCODED FOR TESTING PURPOSES
-
-        wallPreview.setImageDrawable(Utils.combineImages(background,foreground,front,back,this));
+        updatePreview();
     }
 
     /**
@@ -133,6 +125,48 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Updates the wallpaper preview with the correct colors
+     */
+    public void updatePreview() {
+        wallPreview = (ImageView) findViewById(R.id.wall_preview);
+        Log.d("frontColor Editor", "" + Utils.getFrontColor(this) + "\n" + R.color.black);
+        int foregroundCol = 0;
+        int backgroundCol = 0;
+        switch (Utils.getBackgroundColor(this)) {
+            case 0: //front
+                if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))
+                    background = ContextCompat.getDrawable(this, R.drawable.black_xpbackground);
+                else
+                    background = ContextCompat.getDrawable(this, R.drawable.white_xpbackground);
+                break;
+            case 1: //back
+                background = ContextCompat.getDrawable(this, R.drawable.gray_xpbackground);
+                backgroundCol = Utils.getBackColor(this);
+                break;
+            case 2: //accent
+                background = ContextCompat.getDrawable(this, R.drawable.gray_xpbackground);
+                backgroundCol = Utils.getAccentColor(this);
+        }
+        switch (Utils.getForegroundColor(this)) {
+            case 0: //front
+                if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))
+                    foreground = ContextCompat.getDrawable(this, R.drawable.black_x_xpforeground);
+                else
+                    foreground = ContextCompat.getDrawable(this, R.drawable.white_x_xpforeground);
+                break;
+            case 1: //back
+                foreground = ContextCompat.getDrawable(this, R.drawable.grey_x_xpforeground);
+                foregroundCol = Utils.getBackColor(this);
+                break;
+            case 2: //accent
+                foreground = ContextCompat.getDrawable(this, R.drawable.grey_x_xpforeground);
+                foregroundCol = Utils.getAccentColor(this);
+                break;
+        }
+        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, this));
     }
 
 }

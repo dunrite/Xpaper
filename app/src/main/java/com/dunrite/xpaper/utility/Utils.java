@@ -39,7 +39,7 @@ public class Utils {
      * @return integer value of model
      */
     public static int getModel(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("MODEL", Context.MODE_PRIVATE);
         return sharedPref.getInt("model", 0);
     }
 
@@ -50,29 +50,29 @@ public class Utils {
      * @return integer value of front
      */
     public static int getFrontColor(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("COLORS", Context.MODE_PRIVATE);
         return sharedPref.getInt("front", 0);
     }
 
     /**
-     * Returns stored accent value
+     * Returns stored accent color value
      *
      * @param a activity calling
      * @return integer value of accent
      */
     public static int getAccentColor(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("COLORS", Context.MODE_PRIVATE);
         return sharedPref.getInt("accent", 0);
     }
 
     /**
-     * Returns stored back value
+     * Returns stored back color value
      *
      * @param a activity calling
      * @return integer value of back
      */
     public static int getBackColor(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("COLORS", Context.MODE_PRIVATE);
         return sharedPref.getInt("back", 0);
     }
 
@@ -83,7 +83,7 @@ public class Utils {
      * @return background color value
      */
     public static int getBackgroundColor(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("WALL_CONFIG", Context.MODE_PRIVATE);
         return sharedPref.getInt("bgColor", 0);
     }
 
@@ -94,7 +94,7 @@ public class Utils {
      * @return background color value
      */
     public static int getForegroundColor(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("WALL_CONFIG", Context.MODE_PRIVATE);
         return sharedPref.getInt("fgColor", 1); //defaults to back color
     }
 
@@ -105,7 +105,7 @@ public class Utils {
      * @return premium status as a boolean
      */
     public static boolean getPremiumStatus(Activity a) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("APP_SETTINGS", Context.MODE_PRIVATE);
         return sharedPref.getBoolean("premium", false);
     }
 
@@ -120,9 +120,10 @@ public class Utils {
      * @param a     the activity doing the save
      * @param param integer that will be the value stored
      * @param type  determines what type of data is being saved
+     * @param pref  the name of the preference
      */
-    public static void saveDeviceConfig(Activity a, int param, String type) {
-        SharedPreferences sharedPref = a.getPreferences(Context.MODE_PRIVATE);
+    public static void saveDeviceConfig(Activity a, int param, String type, String pref) {
+        SharedPreferences sharedPref = a.getSharedPreferences(pref, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(type, param);
         editor.apply();

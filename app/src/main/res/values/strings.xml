@@ -12,8 +12,8 @@
     <string name="front_color">Front Color</string>
     <string name="accent_color">Accent Color</string>
 
-    <string name="made_with_love">Made with ♥ by \nJaxon Wright \nand \nChad Teitsma</string>
-    <string name="opensource">Open-source libraries used:\n AppIntro by Paolo Rotolo\n Material Dialogs by Aidan Follestad\n Picasso by Square Up</string>
+    <string name="made_with_love">Made with ♥ by \nJaxon Wright\nand Chad Teitsma</string>
+    <string name="opensource">AppIntro by Paolo Rotolo\nMaterial Dialogs by Aidan Follestad\nPicasso by Square Up</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="color_settings">Color Settings</string>
     <string name="placeholder_text">placeholder text</string>
@@ -26,5 +26,10 @@
     <string name="background">Background</string>
     <string name="foreground">Foreground</string>
     <string name="gradient">Gradient</string>
+    <string name="ver_text">Version</string>
+    <string name="dev_text">Developers</string>
+    <string name="artist_text">Artists</string>
+    <string name="artists">Jaxon Wright</string>
+    <string name="lib_text">Libraries Used</string>
 
 </resources>

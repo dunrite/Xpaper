@@ -15,91 +15,163 @@
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:id="@+id/framelayout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:animateLayoutChanges="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/ver_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_text"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/ver_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            android:layout_below="@id/ver_text"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:src="@mipmap/ic_launcher" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/appTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/logo"
-                android:layout_centerHorizontal="true"
-                android:text="@string/app_name"
-                android:textSize="@dimen/abc_text_size_headline_material" />
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_launcher" />
 
-            <TextView
-                android:id="@+id/versionNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/appTitle"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:text="VERSION NUM HERE" />
+                <TextView
+                    android:id="@+id/appTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
 
-            <ImageView
-                android:id="@+id/a_dunrite_app"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/versionNum"
-                android:src="@drawable/adunriteapp" />
+                <TextView
+                    android:id="@+id/versionNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/appTitle"
+                    android:layout_below="@id/appTitle"
+                    android:text="VERSION NUM HERE" />
 
-            <TextView
-                android:id="@+id/separator"
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_below="@id/a_dunrite_app"
-                android:layout_centerHorizontal="true"
-                android:background="#f0a1a1a1" />
+                <ImageView
+                    android:id="@+id/a_dunrite_app"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="16dp"
+                    android:src="@drawable/adunriteapp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/dev_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dev_text"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/ver_card"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/dev_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            android:layout_below="@id/dev_text"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
             <TextView
                 android:id="@+id/made"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/separator"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
+                android:layout_margin="16dp"
                 android:text="@string/made_with_love"
                 android:textSize="@dimen/abc_text_size_title_material" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/art_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/artist_text"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/dev_card"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/art_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            android:layout_below="@id/art_text"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
             <TextView
-                android:id="@+id/separator2"
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_below="@id/made"
-                android:layout_centerHorizontal="true"
-                android:background="#f0a1a1a1" />
+                android:id="@+id/artists"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/artists"
+                android:textSize="@dimen/abc_text_size_title_material" />
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/lib_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lib_text"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/art_card"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/lib_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lib_text"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:id="@+id/opensource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/separator2"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:gravity="center"
+                android:layout_margin="16dp"
                 android:text="@string/opensource"
                 android:textSize="@dimen/abc_text_size_title_material" />
-        </RelativeLayout>
-    </FrameLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 </ScrollView>

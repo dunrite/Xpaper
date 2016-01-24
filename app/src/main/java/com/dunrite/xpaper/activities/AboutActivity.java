@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
         //Inserts the correct version number of the app
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            versionName = "Version " + packageInfo.versionName;
+            versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

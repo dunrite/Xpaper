@@ -1,6 +1,7 @@
 package com.dunrite.xpaper.utility;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -132,10 +134,10 @@ public class Utils {
      *****************************************************************************/
 
     /**
-     * Combines two images into one while also coloring each seperate image
+     * Combines two images into one while also coloring each separate image
      *
      * @param background the main background drawable
-     * @param foreground the drawable in the front of the backgoround
+     * @param foreground the drawable in the front of the background
      * @param color1 color to change background to
      * @param color2 color to change foreground to
      * @param context current context
@@ -176,6 +178,23 @@ public class Utils {
         comboImage.drawBitmap(x, 0, 0, paint2);
 
         return new BitmapDrawable(context.getResources(), cs);
+    }
+
+    /**
+     * Applies wallpaper to device's home screen
+     *
+     * @param c application's conext
+     * @param d drawable to apply to background
+     */
+    public static void applyWallpaper(Context c, Drawable d) {
+        WallpaperManager wm = WallpaperManager.getInstance(c);
+        try {
+            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+            if (bitmap != null)
+                wm.setBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

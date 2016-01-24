@@ -4,6 +4,8 @@
 
     <!-- Used in the IntroActivity -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- To apply wallpaper-->
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
     <application
         android:allowBackup="true"

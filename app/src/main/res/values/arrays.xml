@@ -15,20 +15,23 @@
     <!-- use '#' at beginning to signify as premium-->
     <string-array name="categories">
         <item>Basic X</item>
-        <item>Test Cat</item>
+        <item>Wing</item>
+        <item>VVV</item>
         <item>#Premium Test Cat</item>
     </string-array>
 
     <!-- Category thumbnail previews-->
     <array name="cat_thumbs">
         <item>@drawable/basicx</item>
+        <item>@drawable/wingcat</item>
+        <item>@drawable/vvvcat</item>
         <item>@drawable/testcatblank</item>
-        <item>@drawable/testcat</item>
     </array>
 
     <array name="cat_foregrounds">
         <item>@drawable/basic_foreground</item>
-        <item>@drawable/test_foreground</item>
+        <item>@drawable/wing_foreground</item>
+        <item>@drawable/vvv_foreground</item>
         <item>@drawable/basic_foreground</item>
     </array>
 

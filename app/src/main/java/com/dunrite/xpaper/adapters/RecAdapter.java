@@ -12,21 +12,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.Theme;
 import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.utility.Utils;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Recycler View Adapter to display all of the wallpaper categories in a list of cards
  */
 public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
-    private static String[] mCats;
-    private static int[] mThumbs;
+    private ArrayList<Theme> myThemes;
+
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
-    //change this to not default to 0
+
+    // TODO: Change these to default to what they had previously selected
     private int selectedPos = 0;
     private int lastSelectedPos = 0;
+
     private EditorActivity mActivity;
 
     // Provide a reference to the views for each data item
@@ -34,7 +39,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
-        // each data item is just a string in this case
         public String currentItem;
         public ImageView mImageView;
         public ImageView mLockImage;
@@ -56,7 +60,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            //new SetWallpaperAsyncTask(v.getContext()).execute("");
+
+            //TODO: Prevent selection of premiums if user does not have premium
             lastSelectedPos = selectedPos;
             selectedPos = getAdapterPosition();
             notifyItemChanged(selectedPos);
@@ -69,9 +74,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecAdapter(String[] catNames, int[] catThumbs, EditorActivity activity) {
-        mCats = catNames;
-        mThumbs = catThumbs;
+    public RecAdapter(ArrayList<Theme> themes, EditorActivity activity) {
+        myThemes = themes;
         mActivity = activity;
     }
 
@@ -95,11 +99,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
             holder.mSelectImage.setVisibility(View.INVISIBLE);
         }
 
-        String catName = mCats[position];
+        String catName = myThemes.get(position).getCategoryName();
         //TODO; Check if user has premium
-        if (mCats[position].startsWith("#")) {
+        if (catName.startsWith("#")) {
             holder.mLockImage.setVisibility(View.VISIBLE);
-            catName = mCats[position].substring(1);
+            catName = catName.substring(1);
         } else {
             holder.mLockImage.setVisibility(View.INVISIBLE);
         }
@@ -107,12 +111,12 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Picasso.with(holder.context).load(mThumbs[position])
+        Picasso.with(holder.context).load(myThemes.get(position).getThumbnail())
                 //.transform(new FitToTargetViewTransformation(holder.container))
                 .into(holder.mImageView);
 
         holder.mTextView.setText(catName);
-        holder.currentItem = mCats[position];
+        holder.currentItem = catName;
 
         setAnimation(holder.container, position);
     }
@@ -133,6 +137,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mCats.length;
+        return myThemes.size();
     }
 }

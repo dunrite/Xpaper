@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.Theme;
 import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.adapters.RecAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Fragment that displays grid of wallpaper categories / themes
@@ -48,8 +51,14 @@ public class WallCatFragment extends Fragment {
 
         activity = (EditorActivity) getActivity();
 
+        //generate the list of themes
+        ArrayList<Theme> themes = new ArrayList<>();
+        for (int i = 0; i < myThumbs.length; i++){
+            themes.add(new Theme(myThumbs[i],myCategories[i]));
+        }
+
         // specify an adapter
-        mAdapter = new RecAdapter(myCategories, myThumbs, activity);
+        mAdapter = new RecAdapter(themes, activity);
         mRecyclerView.setAdapter(mAdapter);
 
         // Inflate the layout for this fragment

@@ -162,6 +162,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
 //                foregroundCol = Utils.getAccentColor(this);
 //                break;
 //        }
+        //Determine which color is selected for background
         switch (Utils.getBackgroundColor(this)) {
             case 0: //front
                 backgroundCol = Utils.getFrontColor(this);
@@ -173,7 +174,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 backgroundCol = Utils.getAccentColor(this);
                 break;
         }
-        //Determine which drawable to use as foreground (before colorization
+        //Determine which color is selected for foreground
         switch (Utils.getForegroundColor(this)) {
             case 0: //front
                 foregroundCol = Utils.getFrontColor(this);
@@ -186,7 +187,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 break;
         }
 
-        //MAKE THIS MORE MODULAR SO DONT HAVE TO HARDCORE POSITION TO A DRAWABLE.
+        //TODO: Make this more modular by loading the drawable from an array resource based on the int received from Utils.getTheme() similar to the thumbnails
         switch (Utils.getTheme(this)){
             case 0: //basic
                 foreground = ContextCompat.getDrawable(this, R.drawable.basic_foreground);
@@ -195,9 +196,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 foreground = ContextCompat.getDrawable(this, R.drawable.test_foreground);
                 break;
         }
-        //TO DO - Change model according to selected theme.
-        background = ContextCompat.getDrawable(this, R.drawable.basic_background);
 
+        //we only need one basic background
+        background = ContextCompat.getDrawable(this, R.drawable.basic_background);
 
         wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, this));
     }

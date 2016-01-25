@@ -110,7 +110,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-
         Picasso.with(holder.context).load(myThemes.get(position).getThumbnail())
                 //.transform(new FitToTargetViewTransformation(holder.container))
                 .into(holder.mImageView);

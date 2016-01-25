@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.adapters.RecAdapter;
 
 /**
@@ -20,6 +21,8 @@ public class WallCatFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private EditorActivity activity;
 
     public WallCatFragment() {
         // Required empty public constructor
@@ -43,9 +46,12 @@ public class WallCatFragment extends Fragment {
         String[] myCategories = getResources().getStringArray(R.array.categories);
         int[] myThumbs = getThumbs();
 
+        activity = (EditorActivity) getActivity();
+
         // specify an adapter
-        mAdapter = new RecAdapter(myCategories, myThumbs);
+        mAdapter = new RecAdapter(myCategories, myThumbs, activity);
         mRecyclerView.setAdapter(mAdapter);
+
         // Inflate the layout for this fragment
         return rootView;
     }

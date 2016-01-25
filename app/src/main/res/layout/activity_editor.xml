@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/black_xpbackground"
             android:contentDescription="@string/wallpaper_preview" />
 
         <android.support.design.widget.FloatingActionButton

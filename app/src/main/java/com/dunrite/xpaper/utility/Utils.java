@@ -98,6 +98,11 @@ public class Utils {
         return sharedPref.getInt("fgColor", 1); //defaults to back color
     }
 
+    public static int getTheme(Activity a) {
+        SharedPreferences sharedPref = a.getSharedPreferences("WALL_CONFIG", Context.MODE_PRIVATE);
+        return sharedPref.getInt("theme", 0); //defaults to basic
+    }
+
     /**
      * Checks if user has purchased a premium license or not
      *

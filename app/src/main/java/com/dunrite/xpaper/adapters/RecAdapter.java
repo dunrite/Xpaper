@@ -77,6 +77,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     public RecAdapter(ArrayList<Theme> themes, EditorActivity activity) {
         myThemes = themes;
         mActivity = activity;
+        selectedPos = Utils.getTheme(activity);
+        lastSelectedPos = Utils.getTheme(activity);
     }
 
     // Create new views (invoked by the layout manager)

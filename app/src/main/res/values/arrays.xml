@@ -26,6 +26,12 @@
         <item>@drawable/testcat</item>
     </array>
 
+    <array name="cat_foregrounds">
+        <item>@drawable/basic_foreground</item>
+        <item>@drawable/test_foreground</item>
+        <item>@drawable/basic_foreground</item>
+    </array>
+
     <!-- Color options for wallpaper editing-->
     <string-array name="color_option_array">
         <item>Front Color</item>

@@ -3,6 +3,7 @@ package com.dunrite.xpaper.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -187,20 +188,28 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 break;
         }
 
-        //TODO: Make this more modular by loading the drawable from an array resource based on the int received from Utils.getTheme() similar to the thumbnails
-        switch (Utils.getTheme(this)){
-            case 0: //basic
-                foreground = ContextCompat.getDrawable(this, R.drawable.basic_foreground);
-                break;
-            case 1: //test
-                foreground = ContextCompat.getDrawable(this, R.drawable.test_foreground);
-                break;
-        }
+        //get foreground from the list stored in resources
+        int []foregrounds = getForegrounds();
+        foreground = ContextCompat.getDrawable(this, foregrounds[Utils.getTheme(this)]);
 
         //we only need one basic background
         background = ContextCompat.getDrawable(this, R.drawable.basic_background);
 
         wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, this));
     }
+
+    private int[] getForegrounds() {
+        TypedArray tArray = getResources().obtainTypedArray(
+                R.array.cat_foregrounds);
+        int count = tArray.length();
+        int[] ids = new int[count];
+        for (int i = 0; i < ids.length; i++) {
+            ids[i] = tArray.getResourceId(i, 0);
+        }
+        tArray.recycle();
+        return ids;
+    }
+
+
 
 }

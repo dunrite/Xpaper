@@ -1,6 +1,7 @@
 package com.dunrite.xpaper.adapters;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,14 +62,24 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-            //TODO: Prevent selection of premiums if user does not have premium
-            lastSelectedPos = selectedPos;
-            selectedPos = getAdapterPosition();
-            notifyItemChanged(selectedPos);
-            notifyItemChanged(lastSelectedPos);
+            if (mLockImage.getVisibility() != View.VISIBLE) {
+                lastSelectedPos = selectedPos;
+                selectedPos = getAdapterPosition();
+                notifyItemChanged(selectedPos);
+                notifyItemChanged(lastSelectedPos);
 
-            Utils.saveDeviceConfig(mActivity, selectedPos, "theme", "WALL_CONFIG");
-            mActivity.updatePreview();
+                Utils.saveDeviceConfig(mActivity, selectedPos, "theme", "WALL_CONFIG");
+                mActivity.updatePreview();
+            } else {
+                Snackbar.make(v, "You need premium for this theme", Snackbar.LENGTH_SHORT)
+                        .setAction("get premium", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .show();
+            }
         }
 
     }

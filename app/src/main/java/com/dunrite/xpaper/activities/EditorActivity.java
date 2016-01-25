@@ -130,39 +130,6 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         wallPreview = (ImageView) findViewById(R.id.wall_preview);
         int foregroundCol = 0;
         int backgroundCol = 0;
-        //Determine which drawable to use as background (before colorization)
-//        switch (Utils.getBackgroundColor(this)) {
-//            case 0: //front
-//                if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))
-//                    background = ContextCompat.getDrawable(this, R.drawable.black_xpbackground);
-//                else
-//                    background = ContextCompat.getDrawable(this, R.drawable.white_xpbackground);
-//                break;
-//            case 1: //back
-//                background = ContextCompat.getDrawable(this, R.drawable.basic_background);
-//                backgroundCol = Utils.getBackColor(this);
-//                break;
-//            case 2: //accent
-//                background = ContextCompat.getDrawable(this, R.drawable.basic_background);
-//                backgroundCol = Utils.getAccentColor(this);
-//        }
-//        //Determine which drawable to use as foreground (before colorization
-//        switch (Utils.getForegroundColor(this)) {
-//            case 0: //front
-//                if (Utils.getFrontColor(this) == ContextCompat.getColor(this, R.color.black))
-//                    foreground = ContextCompat.getDrawable(this, R.drawable.black_x_xpforeground);
-//                else
-//                    foreground = ContextCompat.getDrawable(this, R.drawable.white_x_xpforeground);
-//                break;
-//            case 1: //back
-//                foreground = ContextCompat.getDrawable(this, R.drawable.basic_foreground);
-//                foregroundCol = Utils.getBackColor(this);
-//                break;
-//            case 2: //accent
-//                foreground = ContextCompat.getDrawable(this, R.drawable.basic_foreground);
-//                foregroundCol = Utils.getAccentColor(this);
-//                break;
-//        }
         //Determine which color is selected for background
         switch (Utils.getBackgroundColor(this)) {
             case 0: //front

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -69,7 +70,13 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.applyWallpaper(getApplicationContext(), wallPreview.getDrawable());
+                //Handle on a background thread
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Utils.applyWallpaper(getApplicationContext(), wallPreview.getDrawable());
+                    }
+                });
                 Snackbar
                         .make(v, "Applying Wallpaper", Snackbar.LENGTH_SHORT)
                         .show();

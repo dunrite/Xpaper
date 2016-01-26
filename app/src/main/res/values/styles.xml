@@ -2,21 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="windowActionBar">false</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.Transparent" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/ActionBarTransparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="windowActionBarOverlay">true</item>
-    </style>
-
-    <style name="ActionBarTransparent" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:opacity">@integer/status_bar_opacity</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

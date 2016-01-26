@@ -53,11 +53,13 @@
         android:layout_height="0dp"
         android:layout_weight="0.61">
 
+
         <android.support.design.widget.TabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabBackground="@color/white"
+            android:background="@color/white"
             app:tabGravity="fill"
             app:tabMode="fixed" />
 

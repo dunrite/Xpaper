@@ -8,8 +8,10 @@ android {
         applicationId "com.dunrite.xpaper"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 2000000
-        versionName "2.0.0 Beta"
+        versionCode 2000001
+        versionName "2.0.1 Beta"
+        resConfigs "en"
+
     }
     buildTypes {
         release {

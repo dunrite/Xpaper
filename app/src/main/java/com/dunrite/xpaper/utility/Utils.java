@@ -153,8 +153,10 @@ public class Utils {
      * left some code to do that at the bottom
      */
     public static Drawable combineImages(Drawable background, Drawable foreground,
-                                         int color1, int color2, Context context) {
+                                         int color1, int color2, String type, Context context) {
         Bitmap cs = null;
+        int width;
+        int height;
 
         //convert from drawable to bitmap
         Bitmap back = ((BitmapDrawable) background).getBitmap();
@@ -164,10 +166,16 @@ public class Utils {
         x = x.copy(Bitmap.Config.ARGB_8888, true);
 
         //initialize Canvas
-        int width = back.getWidth();
-        int height = back.getHeight();
+        if (type.equals("preview")) {
+            width = back.getWidth() / 2;
+            height = back.getHeight() / 2;
+        } else {
+            width = back.getWidth();
+            height = back.getHeight();
+        }
         cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas comboImage = new Canvas(cs);
+
 
         //Filter for Background
         Paint paint1 = new Paint();
@@ -180,8 +188,13 @@ public class Utils {
         paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
 
         //Draw both images
-        comboImage.drawBitmap(back, 0, 0, paint1);
-        comboImage.drawBitmap(x, 0, 0, paint2);
+        if (type.equals("preview")) {
+            comboImage.drawBitmap(Bitmap.createScaledBitmap(back, back.getWidth() / 2, back.getHeight() / 2, true), 0, 0, paint1);
+            comboImage.drawBitmap(Bitmap.createScaledBitmap(x, x.getWidth() / 2, x.getHeight() / 2, true), 0, 0, paint2);
+        } else {
+            comboImage.drawBitmap(back, 0, 0, paint1);
+            comboImage.drawBitmap(x, 0, 0, paint2);
+        }
 
         return new BitmapDrawable(context.getResources(), cs);
     }

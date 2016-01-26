@@ -40,6 +40,8 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
     private Drawable background;
     private Drawable foreground;
     private SharedPreferences sp;
+    private int foregroundCol = 0;
+    private int backgroundCol = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        Utils.applyWallpaper(getApplicationContext(), wallPreview.getDrawable());
+                        Drawable bm = Utils.combineImages(background, foreground,
+                                backgroundCol, foregroundCol, "wall", getApplicationContext());
+                        Utils.applyWallpaper(getApplicationContext(), bm);
                     }
                 });
                 Snackbar
@@ -135,8 +139,6 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
      */
     public void updatePreview() {
         wallPreview = (ImageView) findViewById(R.id.wall_preview);
-        int foregroundCol = 0;
-        int backgroundCol = 0;
         //Determine which color is selected for background
         switch (Utils.getBackgroundColor(this)) {
             case 0: //front
@@ -168,8 +170,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
 
         //we only need one basic background
         background = ContextCompat.getDrawable(this, R.drawable.basic_background);
-
-        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, this));
+        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, "preview", this));
     }
 
     private int[] getForegrounds() {

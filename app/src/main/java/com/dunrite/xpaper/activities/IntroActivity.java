@@ -25,8 +25,8 @@ public class IntroActivity extends AppIntro2 {
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest
-        addSlide(AppIntroFragment.newInstance("Welcome to Xpaper", "Easily match your Moto X's Style", R.mipmap.ic_launcher, Color.parseColor("#387c93")));
-        addSlide(AppIntroFragment.newInstance("Crispy", "Each wallpaper is in crisp 4K resolution", R.mipmap.ic_launcher, Color.parseColor("#387c93")));
+        addSlide(AppIntroFragment.newInstance("Welcome to Xpaper", "Easily match your Moto X's Style", R.mipmap.ic_launcher, Color.parseColor("#35c1d3")));
+        addSlide(AppIntroFragment.newInstance("Crispy", "Each wallpaper is in crisp 4K resolution", R.mipmap.ic_launcher, Color.parseColor("#35c1d3")));
         // OPTIONAL METHODS
         // Override bar/separator color
         //setBarColor(Color.parseColor("#3F51B5"));

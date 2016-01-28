@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="metallic_lemon_lime">#c7bb38</color>
-    <color name="metallic_silver">#c2c2c2</color>
-    <color name="metallic_dark_gray">#838289</color>
-    <color name="metallic_champagne">#c9bdad</color>
-    <color name="metallic_red">#871219</color>
-    <color name="metallic_pink">#fe849f</color>
-    <color name="metallic_royal_blue">#0079d2</color>
+    <color name="purea_metallic_lemon_lime">#c7bb38</color>
+    <color name="purea_metallic_silver">#c2c2c2</color>
+    <color name="purea_metallic_dark_gray">#838289</color>
+    <color name="purea_metallic_champagne">#c9bdad</color>
+    <color name="purea_metallic_red">#871219</color>
+    <color name="purea_metallic_pink">#fe849f</color>
+    <color name="purea_metallic_royal_blue">#0079d2</color>
 </resources>

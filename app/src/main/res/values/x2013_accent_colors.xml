@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="x13a_metallic_blue">#2783c8</color>
+    <color name="x13a_metallic_silver">#bdbdbb</color>
+    <color name="x13a_metallic_yellow">#ebdf2f</color>
+    <color name="x13a_metallic_red">#e34658</color>
+    <color name="x13a_metallic_purple">#a43d96</color>
+    <color name="x13a_metallic_black">#252525</color>
+    <color name="x13a_metallic_orange">#f4a940</color>
+</resources>

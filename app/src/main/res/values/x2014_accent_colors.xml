@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="x14a_metallic_yellow">#eddb0c</color>
+    <color name="x14a_metallic_orange">#df8503</color>
+    <color name="x14a_metallic_green">#496347</color>
+    <color name="x14a_metallic_bronze">#704910</color>
+    <color name="x14a_metallic_blue">#4380c5</color>
+    <color name="x14a_metallic_black">#1e1e1e</color>
+    <color name="x14a_metallic_red">#c43a38</color>
+    <color name="x14a_metallic_gold">#938b05</color>
+    <color name="x14a_metallic_purple">#a334ac</color>
+    <color name="x14a_metallic_silver">#989898</color>
+</resources>

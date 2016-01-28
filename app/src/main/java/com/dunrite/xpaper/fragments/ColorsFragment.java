@@ -1,8 +1,10 @@
 package com.dunrite.xpaper.fragments;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
  */
 public class ColorsFragment extends Fragment {
     Button frontButton, backButton, accentButton;
-    ImageView frontCirc, backCirc, accCirc;
+    ImageView frontCirc, backCirc, accCirc, devicePrev;
     Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
@@ -60,6 +62,8 @@ public class ColorsFragment extends Fragment {
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
         backCirc = (ImageView) rootView.findViewById(R.id.back_circle);
         accCirc = (ImageView) rootView.findViewById(R.id.accent_circle);
+
+        devicePrev = (ImageView) rootView.findViewById(R.id.device_preview);
 
         modelSpinner = (Spinner) rootView.findViewById(R.id.model_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -228,5 +232,24 @@ public class ColorsFragment extends Fragment {
         frontCirc.setColorFilter(Utils.getFrontColor(getActivity()));
         backCirc.setColorFilter(Utils.getBackColor(getActivity()));
         accCirc.setColorFilter(Utils.getAccentColor(getActivity()));
+        colorBackPreview();
+    }
+
+    public void colorBackPreview() {
+        int model = Utils.getModel(getActivity());
+        Drawable back = null;
+        Drawable accent = null;
+        if (model == 0 || model == 1) {
+            back = ContextCompat.getDrawable(getContext(), R.drawable.pureback);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.pureaccent);
+        } /*else if (model == 2) {
+            back = ContextCompat.getDrawable(getContext(), R.drawable.x13back);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.x13accent);
+        } else if (mdoel == 3) {
+            back = ContextCompat.getDrawable(getContext(), R.drawable.x14back);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.x14accent);
+        }*/
+        Drawable combinedImg = Utils.combineImages(back, accent, Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "preview", getContext());
+        devicePrev.setImageDrawable(combinedImg);
     }
 }

@@ -51,7 +51,7 @@ public class Utils {
      */
     public static int getFrontColor(Activity a) {
         SharedPreferences sharedPref = a.getSharedPreferences("COLORS", Context.MODE_PRIVATE);
-        return sharedPref.getInt("front", 0);
+        return sharedPref.getInt("front", 0); 
     }
 
     /**

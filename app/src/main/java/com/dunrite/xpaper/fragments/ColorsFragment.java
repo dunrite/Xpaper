@@ -261,7 +261,6 @@ public class ColorsFragment extends Fragment {
         frontCirc.setColorFilter(Utils.getFrontColor(getActivity()));
         backCirc.setColorFilter(Utils.getBackColor(getActivity()));
         accCirc.setColorFilter(Utils.getAccentColor(getActivity()));
-        colorBackPreview();
     }
 
     public void colorBackPreview() {

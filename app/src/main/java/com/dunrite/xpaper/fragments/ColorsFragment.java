@@ -261,17 +261,22 @@ public class ColorsFragment extends Fragment {
         int model = Utils.getModel(getActivity());
         Drawable back = ContextCompat.getDrawable(getContext(), R.drawable.pureback);
         Drawable accent = ContextCompat.getDrawable(getContext(), R.drawable.pureaccent);
+        Drawable deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.purerim);
         if (model == 0 || model == 1) {
             back = ContextCompat.getDrawable(getContext(), R.drawable.pureback);
             accent = ContextCompat.getDrawable(getContext(), R.drawable.pureaccent);
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.purerim);
         } else if (model == 2) {
             back = ContextCompat.getDrawable(getContext(), R.drawable.x13back);
             accent = ContextCompat.getDrawable(getContext(), R.drawable.x13accent);
-        } /*else if (mdoel == 3) {
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.x13rim);
+        } else if (model == 3) {
             back = ContextCompat.getDrawable(getContext(), R.drawable.x14back);
             accent = ContextCompat.getDrawable(getContext(), R.drawable.x14accent);
-        }*/
-        Drawable combinedImg = Utils.combineImages(back, accent, Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "preview", getContext());
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.x14rim);
+        }
+        Drawable combinedImg = Utils.combineImages(back, accent, deviceMisc,
+                Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "device", getContext());
         devicePrev.setImageDrawable(combinedImg);
     }
 }

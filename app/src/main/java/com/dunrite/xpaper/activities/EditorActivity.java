@@ -76,7 +76,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        Drawable bm = Utils.combineImages(background, foreground,
+                        Drawable bm = Utils.combineImages(background, foreground, null,
                                 backgroundCol, foregroundCol, "wall", getApplicationContext());
                         Utils.applyWallpaper(getApplicationContext(), bm);
                     }
@@ -170,7 +170,8 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
 
         //we only need one basic background
         background = ContextCompat.getDrawable(this, R.drawable.basic_background);
-        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, backgroundCol, foregroundCol, "preview", this));
+        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, null,
+                backgroundCol, foregroundCol, "preview", this));
     }
 
     private int[] getForegrounds() {

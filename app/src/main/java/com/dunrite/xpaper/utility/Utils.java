@@ -152,9 +152,10 @@ public class Utils {
      * can add a 3rd parameter 'String loc' if you want to save the new image.
      * left some code to do that at the bottom
      */
-    public static Drawable combineImages(Drawable background, Drawable foreground,
+    public static Drawable combineImages(Drawable background, Drawable foreground, Drawable deviceMisc,
                                          int color1, int color2, String type, Context context) {
         Bitmap cs = null;
+        Bitmap device = null;
         int width;
         int height;
 
@@ -165,8 +166,12 @@ public class Utils {
         Bitmap x = ((BitmapDrawable) foreground).getBitmap();
         x = x.copy(Bitmap.Config.ARGB_8888, true);
 
+        if (type.equals("device")) {
+            device = ((BitmapDrawable) deviceMisc).getBitmap();
+            device = device.copy(Bitmap.Config.ARGB_8888, true);
+        }
         //initialize Canvas
-        if (type.equals("preview")) {
+        if (type.equals("preview") || type.equals("device")) {
             width = back.getWidth() / 2;
             height = back.getHeight() / 2;
         } else {
@@ -188,7 +193,9 @@ public class Utils {
         paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
 
         //Draw both images
-        if (type.equals("preview")) {
+        if (type.equals("preview") || type.equals("device")) {
+            if (type.equals("device"))
+                comboImage.drawBitmap(Bitmap.createScaledBitmap(device, device.getWidth() / 2, device.getHeight() / 2, true), 0, 0, null);
             comboImage.drawBitmap(Bitmap.createScaledBitmap(back, back.getWidth() / 2, back.getHeight() / 2, true), 0, 0, paint1);
             comboImage.drawBitmap(Bitmap.createScaledBitmap(x, x.getWidth() / 2, x.getHeight() / 2, true), 0, 0, paint2);
         } else {

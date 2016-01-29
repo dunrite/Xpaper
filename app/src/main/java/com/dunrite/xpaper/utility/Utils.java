@@ -13,7 +13,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -216,8 +219,17 @@ public class Utils {
         WallpaperManager wm = WallpaperManager.getInstance(c);
         try {
             Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+            //Testing setStream
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            InputStream inputStream = new ByteArrayInputStream(out.toByteArray());
+            //Testing setStream
             if (bitmap != null)
-                wm.setBitmap(bitmap);
+                //wm.setBitmap(bitmap);
+                //Testing setStream
+                wm.setStream(inputStream);
+                bitmap.recycle();
+                //Testing setStream
         } catch (IOException e) {
             e.printStackTrace();
         }

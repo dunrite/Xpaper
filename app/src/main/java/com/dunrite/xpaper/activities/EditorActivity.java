@@ -90,6 +90,12 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         updatePreview();
     }
 
+    @Override
+    protected void onResume() {
+        updatePreview();
+        super.onResume();
+    }
+
     /**
      * Sets up the ViewPager to include certain fragments
      *

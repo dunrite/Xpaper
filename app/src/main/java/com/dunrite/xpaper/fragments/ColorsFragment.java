@@ -105,6 +105,15 @@ public class ColorsFragment extends Fragment {
         accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
                 .allowUserColorInput(false);
+
+        //set circles to first in the list and save to configuration
+        frontCirc.setColorFilter(front[0]);
+        backCirc.setColorFilter(back[0]);
+        accCirc.setColorFilter(accent[0]);
+        Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
+        Utils.saveDeviceConfig(getActivity(), back[0], "back", "COLORS");
+        Utils.saveDeviceConfig(getActivity(), accent[0], "accent", "COLORS");
+
         colorBackPreview();
     }
 

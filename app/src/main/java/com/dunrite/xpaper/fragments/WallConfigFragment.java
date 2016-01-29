@@ -13,6 +13,7 @@ import android.widget.SpinnerAdapter;
 
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.activities.EditorActivity;
+import com.dunrite.xpaper.adapters.CustomSpinnerAdapter;
 import com.dunrite.xpaper.utility.Utils;
 
 /**
@@ -56,8 +57,10 @@ public class WallConfigFragment extends Fragment {
         //Setup foreground spinner
         fgSpinner = (AppCompatSpinner) v.findViewById(R.id.foreground_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        SpinnerAdapter fgAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
+//        SpinnerAdapter fgAdapter = ArrayAdapter.createFromResource(getContext(),
+//                R.array.color_option_array, R.layout.color_preview_spinner_item);
+        String objects[] = getResources().getStringArray(R.array.color_option_array);
+        CustomSpinnerAdapter fgAdapter = new CustomSpinnerAdapter(getContext(),R.id.foreground_spinner,objects,activity);
 
         fgSpinner.setAdapter(fgAdapter);
         fgSpinner.setOnItemSelectedListener(fgHandler);

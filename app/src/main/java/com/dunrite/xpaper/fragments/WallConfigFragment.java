@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.activities.EditorActivity;
@@ -47,8 +45,10 @@ public class WallConfigFragment extends Fragment {
         //Setup background spinner
         bgSpinner = (AppCompatSpinner) v.findViewById(R.id.background_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        SpinnerAdapter bgAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
+        //SpinnerAdapter bgAdapter = ArrayAdapter.createFromResource(getContext(),
+        //       R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
+        String objects1[] = getResources().getStringArray(R.array.color_option_array);
+        CustomSpinnerAdapter bgAdapter = new CustomSpinnerAdapter(getContext(), R.id.background_spinner, objects1, activity);
 
         bgSpinner.setAdapter(bgAdapter);
         bgSpinner.setOnItemSelectedListener(bgHandler);

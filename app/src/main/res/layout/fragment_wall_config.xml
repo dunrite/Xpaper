@@ -37,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/background"
-                android:paddingTop="16dp"
-                android:paddingBottom="40dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="30dp"
                 android:paddingRight="8dp" />
 
             <TextView
@@ -46,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/foreground"
+                android:paddingBottom="8dp"
                 android:layout_below="@id/background_text" />
 
             <android.support.v7.widget.AppCompatSpinner

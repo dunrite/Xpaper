@@ -12,12 +12,23 @@ import android.widget.TextView;
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.utility.Utils;
 
+/**
+ * A Custom Spinner Adapter to show color previews next to each option
+ */
 public class CustomSpinnerAdapter extends ArrayAdapter<String>{
 
     private Context context;
     private Activity activity;
     private String[] objects;
 
+    /**
+     * Constructor
+     *
+     * @param context            current app context
+     * @param textViewResourceId resource ID for the current textview
+     * @param objects
+     * @param activity           current activity
+     */
     public CustomSpinnerAdapter(Context context, int textViewResourceId, String[] objects, Activity activity){
         super(context, textViewResourceId, objects);
         this.context = context;
@@ -25,6 +36,13 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String>{
         this.objects = objects;
     }
 
+    /**
+     * Gets custom view and places color reviews in each spot
+     * @param position spot in the spinner
+     * @param convertView
+     * @param parent
+     * @return the custom view
+     */
     public View getCustomView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = activity.getLayoutInflater();

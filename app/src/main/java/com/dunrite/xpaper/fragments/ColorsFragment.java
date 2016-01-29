@@ -37,6 +37,7 @@ public class ColorsFragment extends Fragment {
     public ColorChooserDialog.Builder frontChooser;
     public ColorChooserDialog.Builder backChooser;
     public ColorChooserDialog.Builder accentChooser;
+    private boolean isUserAction; //A way for spinner to know if onItemSelect was user or not
 
     public ColorsFragment() {
         //mandatory empty constructor
@@ -79,7 +80,7 @@ public class ColorsFragment extends Fragment {
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
         colorPreviews();
-        resetColors();
+        resetColors(true);
 
         return rootView;
     }
@@ -87,8 +88,9 @@ public class ColorsFragment extends Fragment {
     /**
      * Resets the color options in the color pickers This is useful for when the user changes what
      * model they are using.
+     * @param first whether this is ran in onCreateView or not
      */
-    public void resetColors() {
+    public void resetColors(boolean first) {
         bColors = new ArrayList<>();
         aColors = new ArrayList<>();
         fetchBackColors(bColors, model);
@@ -106,13 +108,15 @@ public class ColorsFragment extends Fragment {
                 .customColors(accent, null)
                 .allowUserColorInput(false);
 
-        //set circles to first in the list and save to configuration
-        frontCirc.setColorFilter(front[0]);
-        backCirc.setColorFilter(back[0]);
-        accCirc.setColorFilter(accent[0]);
-        Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
-        Utils.saveDeviceConfig(getActivity(), back[0], "back", "COLORS");
-        Utils.saveDeviceConfig(getActivity(), accent[0], "accent", "COLORS");
+        if (!first) {
+            //set circles to first in the list and save to configuration
+            frontCirc.setColorFilter(front[0]);
+            backCirc.setColorFilter(back[0]);
+            accCirc.setColorFilter(accent[0]);
+            Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
+            Utils.saveDeviceConfig(getActivity(), back[0], "back", "COLORS");
+            Utils.saveDeviceConfig(getActivity(), accent[0], "accent", "COLORS");
+        }
 
         colorBackPreview();
     }
@@ -123,32 +127,25 @@ public class ColorsFragment extends Fragment {
             switch (position) {
                 case 0:
                     model = "PURE";
-                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-                    resetColors();
-                    return;
+                    break;
                 case 1:
                     model = "PURE"; //The Style is essentially the same as the Pure
-                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-                    resetColors();
-                    return;
+                    break;
                 case 2:
                     model = "2013";
-                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-                    resetColors();
-                    return;
+                    break;
                 case 3:
                     model = "2014";
-                    Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-                    resetColors();
-                    return;
+                    break;
                 default:
             }
-
+            Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
+            resetColors(!isUserAction);
+            isUserAction = true;
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-
         }
     };
 
@@ -258,6 +255,7 @@ public class ColorsFragment extends Fragment {
      */
     public void colorPreviews() {
         //select correct model
+        isUserAction = false;
         modelSpinner.setSelection(Utils.getModel(getActivity()));
         //fill circle colors
         frontCirc.setColorFilter(Utils.getFrontColor(getActivity()));

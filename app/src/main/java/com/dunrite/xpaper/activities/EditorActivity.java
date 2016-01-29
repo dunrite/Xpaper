@@ -131,6 +131,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
             Intent intent = new Intent(this, ColorsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.pull_in_top, R.anim.stay_still);
+
         }
         if (id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
@@ -176,6 +177,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
 
         //we only need one basic background
         background = ContextCompat.getDrawable(this, R.drawable.basic_background);
+
         wallPreview.setImageDrawable(Utils.combineImages(background, foreground, null,
                 backgroundCol, foregroundCol, "preview", this));
     }

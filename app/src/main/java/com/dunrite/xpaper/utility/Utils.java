@@ -40,7 +40,7 @@ public class Utils {
      */
     public static int getModel(Activity a) {
         SharedPreferences sharedPref = a.getSharedPreferences("MODEL", Context.MODE_PRIVATE);
-        return sharedPref.getInt("model", 0);
+        return sharedPref.getInt("model", 0); 
     }
 
     /**

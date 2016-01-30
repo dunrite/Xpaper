@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -29,7 +30,6 @@ public class Utils {
      */
     private Utils() {
     }
-
 
     /*****************************************************************************
      * Getters
@@ -147,27 +147,91 @@ public class Utils {
      *
      * @param background the main background drawable
      * @param foreground the drawable in the front of the background
-     * @param color1 color to change background to
-     * @param color2 color to change foreground to
+     * @param backgroundCol color to change background to
+     * @param foregroundCol color to change foreground to
      * @param context current context
      * @return colorized and combined drawable
      *
      * can add a 3rd parameter 'String loc' if you want to save the new image.
      * left some code to do that at the bottom
      */
+//    public static Drawable combineImages(Drawable background, Drawable foreground, Drawable deviceMisc,
+//                                                  int color1, int color2, String type, Context context) {
+//        Bitmap cs;
+//        Bitmap device = null;
+//        int width;
+//        int height;
+//
+//        //convert from drawable to bitmap
+//        Bitmap back = ((BitmapDrawable) background).getBitmap();
+//        back = back.copy(Bitmap.Config.ARGB_8888, true);
+//
+//        Bitmap x = ((BitmapDrawable) foreground).getBitmap();
+//        x = x.copy(Bitmap.Config.ARGB_8888, true);
+//
+//        if (type.equals("device")) {
+//            device = ((BitmapDrawable) deviceMisc).getBitmap();
+//            device = device.copy(Bitmap.Config.ARGB_8888, true);
+//        }
+//        //initialize Canvas
+//        if (type.equals("preview") || type.equals("device")) {
+//            width = back.getWidth() / 2;
+//            height = back.getHeight() / 2;
+//        } else {
+//            width = back.getWidth();
+//            height = back.getHeight();
+//        }
+//        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+//        Canvas comboImage = new Canvas(cs);
+//
+//
+//        //Filter for Background
+//        Paint paint1 = new Paint();
+//        paint1.setFilterBitmap(false);
+//        paint1.setColorFilter(new PorterDuffColorFilter(color1, PorterDuff.Mode.SRC_ATOP));
+//
+//        //Filter for Foreground
+//        Paint paint2 = new Paint();
+//        paint2.setFilterBitmap(false);
+//        paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
+//
+//        //Draw both images
+//        if (type.equals("preview") || type.equals("device")) {
+//            if (type.equals("device"))
+//                comboImage.drawBitmap(Bitmap.createScaledBitmap(device, device.getWidth() / 2, device.getHeight() / 2, true), 0, 0, null);
+//            comboImage.drawBitmap(Bitmap.createScaledBitmap(back, back.getWidth() / 2, back.getHeight() / 2, true), 0, 0, paint1);
+//            comboImage.drawBitmap(Bitmap.createScaledBitmap(x, x.getWidth() / 2, x.getHeight() / 2, true), 0, 0, paint2);
+//        } else {
+//            comboImage.drawBitmap(back, 0, 0, paint1);
+//            comboImage.drawBitmap(x, 0, 0, paint2);
+//        }
+//
+//        return new BitmapDrawable(context.getResources(), cs);
+//    }
+
     public static Drawable combineImages(Drawable background, Drawable foreground, Drawable deviceMisc,
-                                         int color1, int color2, String type, Context context) {
-        Bitmap cs = null;
+                                         int backgroundCol, int foregroundCol, String type, Context context) {
+        Bitmap cs;
         Bitmap device = null;
         int width;
         int height;
+
+        //TEXTURE TESTING
+        String textureLocation = "";
+        Bitmap foregroundTexture = null;
+        //TODO: will need some type of way to know which location to put the texture (foreground/background/both)
+//        String textureLocation = "foreground";
+//        type = "";
+        //TODO: will need some type of way to know which foreground texture drawable to pull from
+//        Bitmap foregroundTexture = ((BitmapDrawable) ContextCompat.getDrawable(context, R.drawable.texture_bamboo)).getBitmap();
+//        foregroundTexture = foregroundTexture.copy(Bitmap.Config.ARGB_8888, true);
 
         //convert from drawable to bitmap
         Bitmap back = ((BitmapDrawable) background).getBitmap();
         back = back.copy(Bitmap.Config.ARGB_8888, true);
 
-        Bitmap x = ((BitmapDrawable) foreground).getBitmap();
-        x = x.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap fore = ((BitmapDrawable) foreground).getBitmap();
+        fore = fore.copy(Bitmap.Config.ARGB_8888, true);
 
         if (type.equals("device")) {
             device = ((BitmapDrawable) deviceMisc).getBitmap();
@@ -185,25 +249,46 @@ public class Utils {
         Canvas comboImage = new Canvas(cs);
 
 
-        //Filter for Background
         Paint paint1 = new Paint();
         paint1.setFilterBitmap(false);
-        paint1.setColorFilter(new PorterDuffColorFilter(color1, PorterDuff.Mode.SRC_ATOP));
+        //Filter for Background
+        if(textureLocation.equals("background")||textureLocation.equals("both")){
+            paint1.setColorFilter(new PorterDuffColorFilter(backgroundCol, PorterDuff.Mode.DST_ATOP));
+        }else{
+            paint1.setColorFilter(new PorterDuffColorFilter(backgroundCol, PorterDuff.Mode.SRC_ATOP));
+        }
 
         //Filter for Foreground
         Paint paint2 = new Paint();
         paint2.setFilterBitmap(false);
-        paint2.setColorFilter(new PorterDuffColorFilter(color2, PorterDuff.Mode.SRC_ATOP));
+        if(textureLocation.equals("foreground")||textureLocation.equals("both")){
+            //DIFFICULT CASE
+            //create new canvas to combine
+            Canvas foreCanvas = new Canvas(fore);
+
+            //set up paint for texture
+            Paint paintTexture = new Paint();
+            paintTexture.setFilterBitmap(false);
+            paintTexture.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+            //draw our combination
+            foreCanvas.drawBitmap(foregroundTexture, 0, 0, paintTexture);
+
+            //set up theme for outer image
+            paint2.setColorFilter(new PorterDuffColorFilter(foregroundCol, PorterDuff.Mode.DST_IN));
+        } else {
+            paint2.setColorFilter(new PorterDuffColorFilter(foregroundCol, PorterDuff.Mode.SRC_ATOP));
+        }
 
         //Draw both images
         if (type.equals("preview") || type.equals("device")) {
             if (type.equals("device"))
                 comboImage.drawBitmap(Bitmap.createScaledBitmap(device, device.getWidth() / 2, device.getHeight() / 2, true), 0, 0, null);
             comboImage.drawBitmap(Bitmap.createScaledBitmap(back, back.getWidth() / 2, back.getHeight() / 2, true), 0, 0, paint1);
-            comboImage.drawBitmap(Bitmap.createScaledBitmap(x, x.getWidth() / 2, x.getHeight() / 2, true), 0, 0, paint2);
+            comboImage.drawBitmap(Bitmap.createScaledBitmap(fore, fore.getWidth() / 2, fore.getHeight() / 2, true), 0, 0, paint2);
         } else {
             comboImage.drawBitmap(back, 0, 0, paint1);
-            comboImage.drawBitmap(x, 0, 0, paint2);
+            comboImage.drawBitmap(fore, 0, 0, paint2);
         }
 
         return new BitmapDrawable(context.getResources(), cs);

@@ -21,6 +21,7 @@ import com.dunrite.xpaper.utility.Utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Fragment to house everything to do with displaying the list of wallpapers
@@ -32,8 +33,10 @@ public class ColorsFragment extends Fragment {
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
     int[] front = {Color.BLACK, Color.WHITE};
-    String model = "PURE";
+    int[] accent;
+    int[] back;
     public static String lastPicked;
+    int model;
     public ColorChooserDialog.Builder frontChooser;
     public ColorChooserDialog.Builder backChooser;
     public ColorChooserDialog.Builder accentChooser;
@@ -79,8 +82,13 @@ public class ColorsFragment extends Fragment {
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
+
+        model = Utils.getModel(getActivity());
+
         colorPreviews();
-        resetColors(true);
+        //initialize circle previews
+        resetColors();
+        colorBackPreview();
 
         return rootView;
     }
@@ -88,16 +96,15 @@ public class ColorsFragment extends Fragment {
     /**
      * Resets the color options in the color pickers This is useful for when the user changes what
      * model they are using.
-     * @param first whether this is ran in onCreateView or not
      */
-    public void resetColors(boolean first) {
+    public void resetColors() {
         bColors = new ArrayList<>();
         aColors = new ArrayList<>();
         fetchBackColors(bColors, model);
-        int[] back = Utils.toIntArray(bColors, getContext());
+        back = Utils.toIntArray(bColors, getContext());
 
         fetchAccentColors(aColors, model);
-        int[] accent = Utils.toIntArray(aColors, getContext());
+        accent = Utils.toIntArray(aColors, getContext());
         frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
                 .customColors(front, null)
                 .allowUserColorInput(false);
@@ -107,41 +114,36 @@ public class ColorsFragment extends Fragment {
         accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
                 .allowUserColorInput(false);
-
-        if (!first) {
-            //set circles to first in the list and save to configuration
-            frontCirc.setColorFilter(front[0]);
-            backCirc.setColorFilter(back[0]);
-            accCirc.setColorFilter(accent[0]);
-            Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
-            Utils.saveDeviceConfig(getActivity(), back[0], "back", "COLORS");
-            Utils.saveDeviceConfig(getActivity(), accent[0], "accent", "COLORS");
-        }
-
-        colorBackPreview();
     }
 
     AdapterView.OnItemSelectedListener mHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 0:
-                    model = "PURE";
-                    break;
-                case 1:
-                    model = "PURE"; //The Style is essentially the same as the Pure
-                    break;
-                case 2:
-                    model = "2013";
-                    break;
-                case 3:
-                    model = "2014";
-                    break;
-                default:
+            //only do anything if we are selecting a different model than before
+            if(position != model) {
+                //save and set model number
+                Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
+                model = Utils.getModel(getActivity());
+
+                //reset the color lists based on current model selected
+                resetColors();
+
+                //use color lists to generate random selection
+                Random rand = new Random();
+                int randomAcc = rand.nextInt(accent.length);
+                int randomBack = rand.nextInt(back.length);
+
+                //set circles to random in the list and save to configuration
+                frontCirc.setColorFilter(front[0]);
+                backCirc.setColorFilter(back[randomBack]);
+                accCirc.setColorFilter(accent[randomAcc]);
+                Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
+                Utils.saveDeviceConfig(getActivity(), back[randomBack], "back", "COLORS");
+                Utils.saveDeviceConfig(getActivity(), accent[randomAcc], "accent", "COLORS");
+
+                //finally update preview
+                colorBackPreview();
             }
-            Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-            resetColors(!isUserAction);
-            isUserAction = true;
         }
 
         @Override
@@ -188,13 +190,15 @@ public class ColorsFragment extends Fragment {
      * gets all of the back color IDs for each color for specified 'model'
      * and inserts them into 'list'
      */
-    public void fetchBackColors(ArrayList<Integer> list, String model) {
+    public void fetchBackColors(ArrayList<Integer> list, int modelNumber) {
+        String modelString = modelToString(modelNumber);
+
         Field[] ID_Fields = R.color.class.getFields();
         for (int i = 0; i < ID_Fields.length; i++) {
             String curr = ID_Fields[i].toString();
-            if ("PURE".equals(model) && curr.contains("pure_") ||
-                    "2014".equals(model) && curr.contains("x14_") ||
-                    "2013".equals(model) && curr.contains("x13_")) {
+            if ("PURE".equals(modelString) && curr.contains("pure_") ||
+                    "2014".equals(modelString) && curr.contains("x14_") ||
+                    "2013".equals(modelString) && curr.contains("x13_")) {
                 try {
                     list.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -209,13 +213,15 @@ public class ColorsFragment extends Fragment {
      * gets all of the accent color IDs for each color for specified 'model'
      * and inserts them into 'list'
      */
-    public void fetchAccentColors(ArrayList<Integer> list, String model) {
+    public void fetchAccentColors(ArrayList<Integer> list, int modelNumber) {
+        String modelString = modelToString(modelNumber);
+
         Field[] ID_Fields = R.color.class.getFields();
         for (int i = 0; i < ID_Fields.length; i++) {
             String curr = ID_Fields[i].toString();
-            if ("PURE".equals(model) && curr.contains("purea_") ||
-                    "2014".equals(model) && curr.contains("x14a_") ||
-                    "2013".equals(model) && curr.contains("x13a_")) {
+            if ("PURE".equals(modelString) && curr.contains("purea_") ||
+                    "2014".equals(modelString) && curr.contains("x14a_") ||
+                    "2013".equals(modelString) && curr.contains("x13a_")) {
                 try {
                     list.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -223,6 +229,26 @@ public class ColorsFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private String modelToString(int model){
+        String modelString = "";
+        switch (model) {
+                case 0:
+                    modelString = "PURE";
+                    break;
+                case 1:
+                    modelString = "PURE"; //The Style is essentially the same as the Pure
+                    break;
+                case 2:
+                    modelString = "2013";
+                    break;
+                case 3:
+                    modelString = "2014";
+                    break;
+                default:
+            }
+        return modelString;
     }
 
     /**
@@ -264,7 +290,7 @@ public class ColorsFragment extends Fragment {
     }
 
     public void colorBackPreview() {
-        int model = Utils.getModel(getActivity());
+        model = Utils.getModel(getActivity());
         Drawable back = ContextCompat.getDrawable(getContext(), R.drawable.pureback);
         Drawable accent = ContextCompat.getDrawable(getContext(), R.drawable.pureaccent);
         Drawable deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.purerim);

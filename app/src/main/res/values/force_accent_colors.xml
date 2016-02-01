@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="forcea_metallic_red">#9b243e</color>
+    <color name="forcea_metallic_pink">#ff87a3</color>
+    <color name="forcea_metallic_violet">#b13393</color>
+    <color name="forcea_metallic_lemon_lime">#d9e409</color>
+    <color name="forcea_metallic_royal_blue">#0085cf</color>
+    <color name="forcea_metallic_silver">#b3b3b3</color>
+    <color name="forcea_metallic_dark_gray">#737577</color>
+    <color name="forcea_metallic_light_gold">#dccbaa</color>
+    <color name="forcea_metallic_black">#212121</color>
+</resources>

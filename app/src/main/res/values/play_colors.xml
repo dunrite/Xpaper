@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="play_raspberry">#c43b5b</color>
+    <color name="play_turquoise">#217671</color>
+    <color name="play_mars_red">#912c2f</color>
+    <color name="play_royal_blue">#3a415b</color>
+    <color name="play_tangerine">#ff8d00</color>
+    <color name="play_orange">#fb5c26</color>
+    <color name="play_pitch_black">#343535</color>
+    <color name="play_slate">#4d5056</color>
+    <color name="play_dark_teal">#35504f</color>
+    <color name="play_winter_white">#ffffff</color>
+    <color name="play_deep_sea_blue">#2b323a</color>
+    <color name="play_cabernet">#412831</color>
+    <color name="play_purple">#4c2a63</color>
+    <color name="play_lime">#8cac33</color>
+</resources>

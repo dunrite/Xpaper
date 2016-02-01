@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="playa_metallic_royal_blue">#0085e6</color>
+    <color name="playa_metallic_pink">#ff90ae</color>
+    <color name="playa_metallic_lemon_lime">#d6c83c</color>
+    <color name="playa_metallic_orange">#ee7000</color>
+    <color name="playa_metallic_dark_grey">#64646a</color>
+    <color name="playa_metallic_red">#ac2a2f</color>
+    <color name="playa_metallic_silver">#a0a0a0</color>
+</resources>

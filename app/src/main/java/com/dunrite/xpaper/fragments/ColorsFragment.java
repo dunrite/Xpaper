@@ -27,7 +27,7 @@ import java.util.Random;
  * Fragment to house everything to do with displaying the list of wallpapers
  */
 public class ColorsFragment extends Fragment {
-    Button frontButton, backButton, accentButton;
+    Button frontButton, backButton, accentButton, shuffleButton;
     ImageView frontCirc, backCirc, accCirc, devicePrev;
     Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
@@ -40,7 +40,6 @@ public class ColorsFragment extends Fragment {
     public ColorChooserDialog.Builder frontChooser;
     public ColorChooserDialog.Builder backChooser;
     public ColorChooserDialog.Builder accentChooser;
-    private boolean isUserAction; //A way for spinner to know if onItemSelect was user or not
 
     public ColorsFragment() {
         //mandatory empty constructor
@@ -60,6 +59,7 @@ public class ColorsFragment extends Fragment {
         frontButton = (Button) rootView.findViewById(R.id.front_button);
         backButton = (Button) rootView.findViewById(R.id.back_button);
         accentButton = (Button) rootView.findViewById(R.id.accent_button);
+        shuffleButton = (Button) rootView.findViewById(R.id.random_button);
 
         //instantiate color circles
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
@@ -82,6 +82,7 @@ public class ColorsFragment extends Fragment {
         frontButton.setOnClickListener(fHandler);
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
+        shuffleButton.setOnClickListener(sHandler);
 
         model = Utils.getModel(getActivity());
 
@@ -93,63 +94,10 @@ public class ColorsFragment extends Fragment {
         return rootView;
     }
 
-    /**
-     * Resets the color options in the color pickers This is useful for when the user changes what
-     * model they are using.
-     */
-    public void resetColors() {
-        bColors = new ArrayList<>();
-        aColors = new ArrayList<>();
-        fetchBackColors(bColors, model);
-        back = Utils.toIntArray(bColors, getContext());
 
-        fetchAccentColors(aColors, model);
-        accent = Utils.toIntArray(aColors, getContext());
-        frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
-                .customColors(front, null)
-                .allowUserColorInput(false);
-        backChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.back_color)
-                .customColors(back, null)
-                .allowUserColorInput(false);
-        accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
-                .customColors(accent, null)
-                .allowUserColorInput(false);
-    }
-
-    AdapterView.OnItemSelectedListener mHandler = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            //only do anything if we are selecting a different model than before
-            if(position != model) {
-                //save and set model number
-                Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
-                model = Utils.getModel(getActivity());
-
-                //reset the color lists based on current model selected
-                resetColors();
-
-                //use color lists to generate random selection
-                Random rand = new Random();
-                int randomAcc = rand.nextInt(accent.length);
-                int randomBack = rand.nextInt(back.length);
-
-                //set circles to random in the list and save to configuration
-                frontCirc.setColorFilter(front[0]);
-                backCirc.setColorFilter(back[randomBack]);
-                accCirc.setColorFilter(accent[randomAcc]);
-                Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
-                Utils.saveDeviceConfig(getActivity(), back[randomBack], "back", "COLORS");
-                Utils.saveDeviceConfig(getActivity(), accent[randomAcc], "accent", "COLORS");
-
-                //finally update preview
-                colorBackPreview();
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-    };
+    /*****************************************************************************
+     * OnClickListeners
+     *****************************************************************************/
 
     /**
      * fHandler
@@ -184,6 +132,87 @@ public class ColorsFragment extends Fragment {
             lastPicked = "accent";
         }
     };
+
+    /**
+     * sHandler
+     * OnClickListener for shuffle button
+     */
+    View.OnClickListener sHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            randomizeConfig();
+        }
+    };
+
+    /**
+     * Listener for device spinner
+     */
+    AdapterView.OnItemSelectedListener mHandler = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            //only do anything if we are selecting a different model than before
+            if (position != model) {
+                //save and set model number
+                Utils.saveDeviceConfig(getActivity(), position, "model", "MODEL");
+                model = Utils.getModel(getActivity());
+
+                //reset the color lists based on current model selected
+                resetColors();
+                //randomize the configuration
+                randomizeConfig();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    };
+
+
+    /*****************************************************************************
+     * Color management
+     *****************************************************************************/
+
+    /**
+     * Resets the color options in the color pickers This is useful for when the user changes what
+     * model they are using.
+     */
+    public void resetColors() {
+        bColors = new ArrayList<>();
+        aColors = new ArrayList<>();
+        fetchBackColors(bColors, model);
+        back = Utils.toIntArray(bColors, getContext());
+
+        fetchAccentColors(aColors, model);
+        accent = Utils.toIntArray(aColors, getContext());
+        frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
+                .customColors(front, null)
+                .allowUserColorInput(false);
+        backChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.back_color)
+                .customColors(back, null)
+                .allowUserColorInput(false);
+        accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
+                .customColors(accent, null)
+                .allowUserColorInput(false);
+    }
+
+    /**
+     * Randomizes the device configuration
+     */
+    private void randomizeConfig() {
+        //use color lists to generate random selection
+        Random rand = new Random();
+        int randomAcc = rand.nextInt(accent.length);
+        int randomBack = rand.nextInt(back.length);
+
+        //set circles to random in the list and save to configuration
+        frontCirc.setColorFilter(front[0]);
+        backCirc.setColorFilter(back[randomBack]);
+        accCirc.setColorFilter(accent[randomAcc]);
+        Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
+        Utils.saveDeviceConfig(getActivity(), back[randomBack], "back", "COLORS");
+        Utils.saveDeviceConfig(getActivity(), accent[randomAcc], "accent", "COLORS");
+        colorBackPreview();
+    }
 
     /**
      * fetchBackColors
@@ -231,26 +260,6 @@ public class ColorsFragment extends Fragment {
         }
     }
 
-    private String modelToString(int model){
-        String modelString = "";
-        switch (model) {
-                case 0:
-                    modelString = "PURE";
-                    break;
-                case 1:
-                    modelString = "PURE"; //The Style is essentially the same as the Pure
-                    break;
-                case 2:
-                    modelString = "2013";
-                    break;
-                case 3:
-                    modelString = "2014";
-                    break;
-                default:
-            }
-        return modelString;
-    }
-
     /**
      * Handles what happens when user selected a color
      *
@@ -281,7 +290,6 @@ public class ColorsFragment extends Fragment {
      */
     public void colorPreviews() {
         //select correct model
-        isUserAction = false;
         modelSpinner.setSelection(Utils.getModel(getActivity()));
         //fill circle colors
         frontCirc.setColorFilter(Utils.getFrontColor(getActivity()));
@@ -289,6 +297,9 @@ public class ColorsFragment extends Fragment {
         accCirc.setColorFilter(Utils.getAccentColor(getActivity()));
     }
 
+    /**
+     * Colors the back preview of the device
+     */
     public void colorBackPreview() {
         model = Utils.getModel(getActivity());
         Drawable back = ContextCompat.getDrawable(getContext(), R.drawable.pureback);
@@ -310,5 +321,36 @@ public class ColorsFragment extends Fragment {
         Drawable combinedImg = Utils.combineImages(back, accent, deviceMisc,
                 Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "device", getContext());
         devicePrev.setImageDrawable(combinedImg);
+    }
+
+
+    /*****************************************************************************
+     * The rest
+     *****************************************************************************/
+
+    /**
+     * Converts integer position in spinner to a String
+     *
+     * @param model the integer position
+     * @return model string
+     */
+    private String modelToString(int model) {
+        String modelString = "";
+        switch (model) {
+            case 0:
+                modelString = "PURE";
+                break;
+            case 1:
+                modelString = "PURE"; //The Style is essentially the same as the Pure
+                break;
+            case 2:
+                modelString = "2013";
+                break;
+            case 3:
+                modelString = "2014";
+                break;
+            default:
+        }
+        return modelString;
     }
 }

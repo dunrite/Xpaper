@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#fcfcfc"
-            android:text="Front"
+            android:text="@string/front"
             android:id="@+id/front_button"
             android:layout_below="@id/model_spinner"
             android:layout_centerVertical="true"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="#fcfcfc"
-            android:text="Back"
+            android:text="@string/back"
             android:id="@+id/back_button"
             android:layout_below="@+id/front_button"
             android:layout_centerHorizontal="true" />
@@ -84,6 +84,16 @@
             android:src="@drawable/circle"
             android:layout_toLeftOf="@id/accent_button"
             android:layout_below="@id/back_circle" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#fcfcfc"
+            android:text="@string/shuffle"
+            android:id="@+id/random_button"
+            android:layout_below="@+id/accent_button"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </LinearLayout>

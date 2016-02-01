@@ -17,7 +17,8 @@
         <item>Basic X</item>
         <item>Wing</item>
         <item>VVV</item>
-        <item>#Premium Test Cat</item>
+        <item>Backslash</item>
+        <!--<item>#Premium Test Cat</item>-->
     </string-array>
 
     <!-- Category thumbnail previews-->
@@ -25,14 +26,16 @@
         <item>@drawable/basicx</item>
         <item>@drawable/wingcat</item>
         <item>@drawable/vvvcat</item>
-        <item>@drawable/testcatblank</item>
+        <item>@drawable/backslashcat</item>
+        <!--<item>@drawable/testcatblank</item>-->
     </array>
 
     <array name="cat_foregrounds">
         <item>@drawable/basic_foreground</item>
         <item>@drawable/wing_foreground</item>
         <item>@drawable/vvv_foreground</item>
-        <item>@drawable/basic_foreground</item>
+        <item>@drawable/backslash_foreground</item>
+        <!--<item>@drawable/basic_foreground</item>-->
     </array>
 
     <!-- Color options for wallpaper editing-->

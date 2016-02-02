@@ -1,11 +1,16 @@
 package com.dunrite.xpaper.activities;
 
+import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +53,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        setRecentsStyle(); //sets style of tab in recents menu
         sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
 
         //Starts IntroActivity if this is the first launch of app
@@ -88,6 +94,17 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         });
 
         updatePreview();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setRecentsStyle() {
+        Bitmap recentsIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_recents);
+        String title = "Xpaper";
+        int color = ContextCompat.getColor(this, R.color.colorPrimary);
+
+        ActivityManager.TaskDescription description =
+                new ActivityManager.TaskDescription(title, recentsIcon, color);
+        this.setTaskDescription(description);
     }
 
     @Override

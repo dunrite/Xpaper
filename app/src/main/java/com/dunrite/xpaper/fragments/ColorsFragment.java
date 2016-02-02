@@ -186,12 +186,15 @@ public class ColorsFragment extends Fragment {
         accent = Utils.toIntArray(aColors, getContext());
         frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
                 .customColors(front, null)
+                .allowUserColorInputAlpha(false)
                 .allowUserColorInput(true);
         backChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.back_color)
                 .customColors(back, null)
+                .allowUserColorInputAlpha(false)
                 .allowUserColorInput(true);
         accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
                 .customColors(accent, null)
+                .allowUserColorInputAlpha(false)
                 .allowUserColorInput(true);
     }
 

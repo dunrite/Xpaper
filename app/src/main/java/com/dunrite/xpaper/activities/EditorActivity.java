@@ -42,7 +42,6 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
     ColorsFragment cfrag;
 
     private ImageView wallPreview;
-    private Drawable background;
     private Drawable foreground;
     private SharedPreferences sp;
     private int foregroundCol = 0;
@@ -82,8 +81,8 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        Drawable bm = Utils.combineImages(background, foreground, null,
-                                backgroundCol, foregroundCol, "wall", getApplicationContext());
+                        Drawable bm = Utils.constructWallpaper(getApplicationContext(), foreground,
+                                backgroundCol, foregroundCol, false);
                         Utils.applyWallpaper(getApplicationContext(), bm);
                     }
                 });
@@ -192,11 +191,8 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         int []foregrounds = getForegrounds();
         foreground = ContextCompat.getDrawable(this, foregrounds[Utils.getTheme(this)]);
 
-        //we only need one basic background
-        background = ContextCompat.getDrawable(this, R.drawable.basic_background);
-
-        wallPreview.setImageDrawable(Utils.combineImages(background, foreground, null,
-                backgroundCol, foregroundCol, "preview", this));
+        wallPreview.setImageDrawable(Utils.constructWallpaper(this, foreground,
+                backgroundCol, foregroundCol, true));
     }
 
     private int[] getForegrounds() {

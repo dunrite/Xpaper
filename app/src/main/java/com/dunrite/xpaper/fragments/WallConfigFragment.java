@@ -35,6 +35,12 @@ public class WallConfigFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        setupSpinners(getView());
+        super.onResume();
+    }
+
     /**
      * populates spinners with correct content and listeners
      *
@@ -42,13 +48,11 @@ public class WallConfigFragment extends Fragment {
      */
     private void setupSpinners(View v) {
 
+        String objects[] = getResources().getStringArray(R.array.color_option_array);
+
         //Setup background spinner
         bgSpinner = (AppCompatSpinner) v.findViewById(R.id.background_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        //SpinnerAdapter bgAdapter = ArrayAdapter.createFromResource(getContext(),
-        //       R.array.color_option_array, android.R.layout.simple_spinner_dropdown_item);
-        String objects1[] = getResources().getStringArray(R.array.color_option_array);
-        CustomSpinnerAdapter bgAdapter = new CustomSpinnerAdapter(getContext(), R.id.background_spinner, objects1, activity);
+        CustomSpinnerAdapter bgAdapter = new CustomSpinnerAdapter(getContext(), R.id.background_spinner, objects, activity);
 
         bgSpinner.setAdapter(bgAdapter);
         bgSpinner.setOnItemSelectedListener(bgHandler);
@@ -56,11 +60,7 @@ public class WallConfigFragment extends Fragment {
 
         //Setup foreground spinner
         fgSpinner = (AppCompatSpinner) v.findViewById(R.id.foreground_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-//        SpinnerAdapter fgAdapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.color_option_array, R.layout.color_preview_spinner_item);
-        String objects[] = getResources().getStringArray(R.array.color_option_array);
-        CustomSpinnerAdapter fgAdapter = new CustomSpinnerAdapter(getContext(),R.id.foreground_spinner,objects,activity);
+        CustomSpinnerAdapter fgAdapter = new CustomSpinnerAdapter(getContext(), R.id.foreground_spinner, objects, activity);
 
         fgSpinner.setAdapter(fgAdapter);
         fgSpinner.setOnItemSelectedListener(fgHandler);

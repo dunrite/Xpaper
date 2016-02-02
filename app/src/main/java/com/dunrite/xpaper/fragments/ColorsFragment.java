@@ -227,7 +227,9 @@ public class ColorsFragment extends Fragment {
             String curr = ID_Fields[i].toString();
             if ("PURE".equals(modelString) && curr.contains("pure_") ||
                     "2014".equals(modelString) && curr.contains("x14_") ||
-                    "2013".equals(modelString) && curr.contains("x13_")) {
+                    "2013".equals(modelString) && curr.contains("x13_") ||
+                    "FORCE".equals(modelString) && curr.contains("force_") ||
+                    "PLAY".equals(modelString) && curr.contains("play_")) {
                 try {
                     list.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -250,7 +252,9 @@ public class ColorsFragment extends Fragment {
             String curr = ID_Fields[i].toString();
             if ("PURE".equals(modelString) && curr.contains("purea_") ||
                     "2014".equals(modelString) && curr.contains("x14a_") ||
-                    "2013".equals(modelString) && curr.contains("x13a_")) {
+                    "2013".equals(modelString) && curr.contains("x13a_") ||
+                    "FORCE".equals(modelString) && curr.contains("forcea_") ||
+                    "PLAY".equals(modelString) && curr.contains("playa_")) {
                 try {
                     list.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -310,13 +314,22 @@ public class ColorsFragment extends Fragment {
             accent = ContextCompat.getDrawable(getContext(), R.drawable.pureaccent);
             deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.purerim);
         } else if (model == 2) {
-            back = ContextCompat.getDrawable(getContext(), R.drawable.x13back);
-            accent = ContextCompat.getDrawable(getContext(), R.drawable.x13accent);
-            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.x13rim);
+            back = ContextCompat.getDrawable(getContext(), R.drawable.playback);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.playaccent);
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.playrim);
         } else if (model == 3) {
+            back = ContextCompat.getDrawable(getContext(), R.drawable.forceback);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.forceaccent);
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.forcerim);
+        } else if (model == 4) {
             back = ContextCompat.getDrawable(getContext(), R.drawable.x14back);
             accent = ContextCompat.getDrawable(getContext(), R.drawable.x14accent);
             deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.x14rim);
+        } else if (model == 5) {
+            back = ContextCompat.getDrawable(getContext(), R.drawable.x13back);
+            accent = ContextCompat.getDrawable(getContext(), R.drawable.x13accent);
+            deviceMisc = ContextCompat.getDrawable(getContext(), R.drawable.x13rim);
+
         }
         Drawable combinedImg = Utils.combineImages(back, accent, deviceMisc,
                 Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "device", getContext());
@@ -344,10 +357,16 @@ public class ColorsFragment extends Fragment {
                 modelString = "PURE"; //The Style is essentially the same as the Pure
                 break;
             case 2:
-                modelString = "2013";
+                modelString = "PLAY";
                 break;
             case 3:
+                modelString = "FORCE";
+                break;
+            case 4:
                 modelString = "2014";
+                break;
+            case 5:
+                modelString = "2013";
                 break;
             default:
         }

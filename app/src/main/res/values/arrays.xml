@@ -5,10 +5,11 @@
     <string-array name="models_array">
         <item>Moto X Pure Edition</item>
         <item>Moto X Style</item>
-        <item>Moto X 2013</item>
+        <item>Moto X Play</item>
+        <item>Moto X Force</item>
         <item>Moto X 2014</item>
-        <!--<item>Moto X Force</item>-->
-        <!--<item>Moto X Play</item>-->
+        <item>Moto X 2013</item>
+
     </string-array>
 
     <!-- Wallpaper Category / Theme names-->

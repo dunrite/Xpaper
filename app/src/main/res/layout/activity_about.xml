@@ -162,8 +162,7 @@
             android:layout_below="@id/lib_text"
             app:cardBackgroundColor="@color/white"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginRight="16dp">
 
             <TextView
                 android:id="@+id/opensource"
@@ -171,6 +170,37 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/opensource"
+                android:textSize="@dimen/abc_text_size_title_material" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/disc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disclaimer"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/lib_card"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/disc_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/disc_text"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/disclaimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/disclaimer"
                 android:textSize="@dimen/abc_text_size_title_material" />
         </android.support.v7.widget.CardView>
     </RelativeLayout>

@@ -282,14 +282,19 @@ public class Utils {
 
         //Draw both images
         if (type.equals("preview") || type.equals("device")) {
-            if (type.equals("device"))
+            if (type.equals("device") && device != null) {
                 comboImage.drawBitmap(Bitmap.createScaledBitmap(device, device.getWidth() / 2, device.getHeight() / 2, true), 0, 0, null);
+                device.recycle();
+            }
             comboImage.drawBitmap(Bitmap.createScaledBitmap(back, back.getWidth() / 2, back.getHeight() / 2, true), 0, 0, paint1);
             comboImage.drawBitmap(Bitmap.createScaledBitmap(fore, fore.getWidth() / 2, fore.getHeight() / 2, true), 0, 0, paint2);
+
         } else {
             comboImage.drawBitmap(back, 0, 0, paint1);
             comboImage.drawBitmap(fore, 0, 0, paint2);
         }
+        back.recycle();
+        fore.recycle();
 
         return new BitmapDrawable(context.getResources(), cs);
     }

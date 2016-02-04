@@ -1,5 +1,6 @@
 package com.dunrite.xpaper.fragments;
 
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,12 +12,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.dunrite.xpaper.ColorSelection;
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.activities.ColorsActivity;
+import com.dunrite.xpaper.adapters.CustomColorChooserAdapter;
 import com.dunrite.xpaper.utility.Utils;
 
 import java.lang.reflect.Field;
@@ -31,15 +36,20 @@ public class ColorsFragment extends Fragment {
     ImageView frontCirc, backCirc, accCirc, devicePrev;
     Spinner modelSpinner;
     ArrayList<Integer> bColors = new ArrayList<>();
+    ArrayList<Integer> bTextures = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
+
     int[] front = {Color.BLACK, Color.WHITE};
     int[] accent;
     int[] back;
     public static String lastPicked;
     int model;
     public ColorChooserDialog.Builder frontChooser;
-    public ColorChooserDialog.Builder backChooser;
+    public MaterialDialog.Builder backChooser;
     public ColorChooserDialog.Builder accentChooser;
+
+    private GridView mGrid;
+    View customView;
 
     public ColorsFragment() {
         //mandatory empty constructor
@@ -53,6 +63,7 @@ public class ColorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_colors, container, false);
 
         //instantiate buttons
@@ -178,20 +189,46 @@ public class ColorsFragment extends Fragment {
      */
     public void resetColors() {
         bColors = new ArrayList<>();
+        bTextures = new ArrayList<>();
         aColors = new ArrayList<>();
-        fetchBackColors(bColors, model);
+        //fetch back colors and textures
+        fetchBackColors(bColors, bTextures, model);
+
+        //set up adapter for custom view
+        ArrayList<ColorSelection> colorSelections = new ArrayList<ColorSelection>();
+
+        //iterate through colors
         back = Utils.toIntArray(bColors, getContext());
+        for (int i = 0; i < bColors.size(); i++) {
+            //0 means this is a color and not a texture
+            colorSelections.add(new ColorSelection(back[i], 0));
+        }
+        //iterate throuth textures
+        for (int i = 0; i < bTextures.size(); i++) {
+            //0 means this is a texture and not a color
+            colorSelections.add(new ColorSelection(0, bTextures.get(i)));
+        }
+
+
+        backChooser = new MaterialDialog.Builder(getContext())
+                .title(R.string.back_color)
+                        //TODO: Implement call back for ontouch
+                .customView(R.layout.dialog_color_chooser, false)
+                .negativeText("Cancel")
+                .positiveText("Done");
+        MaterialDialog dialog = backChooser.build();
+
+        //set our custom grid adapter
+        customView = dialog.getCustomView();
+        mGrid = (GridView) customView.findViewById(R.id.grid);
+        mGrid.setAdapter(new CustomColorChooserAdapter(getContext(), colorSelections, (ColorsActivity) getActivity()));
+
 
         fetchAccentColors(aColors, model);
         accent = Utils.toIntArray(aColors, getContext());
         frontChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.front_color)
                 .customColors(front, null)
                 .preselect(Utils.getFrontColor(getActivity()))
-                .allowUserColorInputAlpha(false)
-                .allowUserColorInput(true);
-        backChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.back_color)
-                .customColors(back, null)
-                .preselect(Utils.getBackColor(getActivity()))
                 .allowUserColorInputAlpha(false)
                 .allowUserColorInput(true);
         accentChooser = new ColorChooserDialog.Builder((ColorsActivity) getActivity(), R.string.accent_color)
@@ -225,7 +262,7 @@ public class ColorsFragment extends Fragment {
      * gets all of the back color IDs for each color for specified 'model'
      * and inserts them into 'list'
      */
-    public void fetchBackColors(ArrayList<Integer> list, int modelNumber) {
+    public void fetchBackColors(ArrayList<Integer> colors, ArrayList<Integer> textures, int modelNumber) {
         String modelString = modelToString(modelNumber);
 
         Field[] ID_Fields = R.color.class.getFields();
@@ -237,11 +274,36 @@ public class ColorsFragment extends Fragment {
                     "FORCE".equals(modelString) && curr.contains("force_") ||
                     "PLAY".equals(modelString) && curr.contains("play_")) {
                 try {
-                    list.add(ID_Fields[i].getInt(null));
+                    colors.add(ID_Fields[i].getInt(null));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+
+        TypedArray tArray;
+        switch (model) {
+            case 0: //PURE
+                tArray = getResources().obtainTypedArray(R.array.pure_textures);
+                //add resource id's to our arrayList
+                int count = tArray.length();
+                int[] ids = new int[count];
+                for (int i = 0; i < ids.length; i++) {
+                    textures.add(tArray.getResourceId(i, 0));
+                }
+                break;
+            case 1: //PURE
+                break;
+            case 2: //PLAY
+                break;
+            case 3: //FORCE
+                break;
+            case 4: //2014
+                break;
+            case 5: //2013
+                break;
+            default:
         }
     }
 

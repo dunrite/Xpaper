@@ -39,6 +39,12 @@
         <!--<item>@drawable/basic_foreground</item>-->
     </array>
 
+    <array name="pure_textures">
+        <item>@drawable/texture_bamboo</item>
+        <item>@drawable/texture_ebony</item>
+        <item>@drawable/texture_charcoal_ash</item>
+    </array>
+
     <!-- Color options for wallpaper editing-->
     <string-array name="color_option_array">
         <item>Front Color</item>

@@ -105,6 +105,7 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener fHandler = new View.OnClickListener() {
         public void onClick(View v) {
+            frontChooser.preselect(Utils.getFrontColor(getActivity()));
             frontChooser.show();
             lastPicked = "front";
 
@@ -117,6 +118,7 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener bHandler = new View.OnClickListener() {
         public void onClick(View v) {
+            backChooser.preselect(Utils.getBackColor(getActivity()));
             backChooser.show();
             lastPicked = "back";
         }
@@ -128,6 +130,7 @@ public class ColorsFragment extends Fragment {
      */
     View.OnClickListener aHandler = new View.OnClickListener() {
         public void onClick(View v) {
+            accentChooser.preselect(Utils.getAccentColor(getActivity()));
             accentChooser.show();
             lastPicked = "accent";
         }

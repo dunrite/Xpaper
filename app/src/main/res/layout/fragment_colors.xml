@@ -14,12 +14,12 @@
         android:id="@+id/device_preview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.45" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_weight="0.55">
 
         <Spinner
             android:layout_width="wrap_content"
@@ -95,6 +95,14 @@
             android:layout_below="@+id/accent_button"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/random_button"
+            android:textAlignment="center"
+            android:layout_margin="16dp"
+            android:text="Wood and leather options are coming soon" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/introFAB"
             android:layout_width="wrap_content"
@@ -104,6 +112,4 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_done_24dp" />
     </RelativeLayout>
-
-
 </LinearLayout>

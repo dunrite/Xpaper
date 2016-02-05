@@ -190,9 +190,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         //get foreground from the list stored in resources
         int []foregrounds = getForegrounds();
         foreground = ContextCompat.getDrawable(this, foregrounds[Utils.getTheme(this)]);
-
-        wallPreview.setImageDrawable(Utils.constructWallpaper(this, foreground,
-                backgroundCol, foregroundCol, true));
+        Drawable combined = Utils.constructWallpaper(this, foreground,
+                backgroundCol, foregroundCol, true);
+        Utils.applyImageToView(this, wallPreview, combined);
     }
 
     private int[] getForegrounds() {

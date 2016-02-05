@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- All variants of 2013 Moto X-->
+    <string-array name="x13_model_number_array">
+        <item>XT1049</item>
+        <item>XT1050</item>
+        <item>XT1052</item>
+        <item>XT1053</item>
+        <item>XT1055</item>
+        <item>XT1056</item>
+        <item>XT1058</item>
+        <item>XT1060</item>
+    </string-array>
+
+    <!-- All variants of 2014 Moto X-->
+    <string-array name="x14_model_number_array">
+        <item>XT1085</item>
+        <item>XT1092</item>
+        <item>XT1093</item>
+        <item>XT1094</item>
+        <item>XT1095</item>
+        <item>XT1096</item>
+        <item>XT1097</item>
+    </string-array>
+
+    <!-- All variants of Moto X Pure Edition-->
+    <string-array name="pure_model_number_array">
+        <item>XT1575</item>
+    </string-array>
+
+    <!-- All variants of Moto X Style-->
+    <string-array name="style_model_number_array">
+        <item>XT1570</item>
+        <item>XT1572</item>
+    </string-array>
+
+    <!-- All variants of Moto X Force / DROID Turbo 2-->
+    <string-array name="force_model_number_array">
+        <item>XT1585</item>
+        <item>XT1580</item>
+    </string-array>
+
+    <!-- All variants of Moto X Play / DROID Maxx 2-->
+    <string-array name="play_model_number_array">
+        <item>XT1561</item>
+        <item>XT1562</item>
+        <item>XT1563</item>
+        <item>XT1565</item>
+    </string-array>
+</resources>

@@ -13,15 +13,19 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
-import com.jaredrummler.android.device.DeviceName;
+import com.bumptech.glide.Glide;
+import com.dunrite.xpaper.R;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +38,7 @@ public class Utils {
      */
     private Utils() {
     }
+
 
     /*****************************************************************************
      * Getters
@@ -117,8 +122,95 @@ public class Utils {
      * @return premium status as a boolean
      */
     public static boolean getPremiumStatus(Activity a) {
-        SharedPreferences sharedPref = a.getSharedPreferences("APP_SETTINGS", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = a.getSharedPreferences("PREMIUM", Context.MODE_PRIVATE);
         return sharedPref.getBoolean("premium", false);
+    }
+
+    /**
+     * Gets Device's screen resolution width
+     *
+     * @param context current context
+     * @return width value
+     * //TODO: get actual value, if possible
+     */
+    public static int getDeviceResWidth(Context context) {
+        int width = 0;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        Display display = wm.getDefaultDisplay();
+        int density = metrics.densityDpi;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            display.getRealMetrics(metrics);
+
+            width = metrics.widthPixels;
+        }
+        Log.d("DEVICE WIDTH", "" + width);
+        return width;
+    }
+
+    /**
+     * Gets device's screen resoluton height
+     *
+     * @param context current context
+     * @return height value
+     * //TODO: get actual value, if possible
+     */
+    public static int getDeviceResHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        int density = metrics.densityDpi;
+        Log.d("DEVICE HEIGHT", "" + (density / 160) * metrics.heightPixels);
+        return (density / 160) * metrics.heightPixels;
+    }
+
+    /**
+     * Gets device name and returns string for the intro activity
+     *
+     * @return finished sentence saying the recognized device
+     */
+    public static String getDeviceNameString(Activity a) {
+        String name = Build.MODEL;
+        String s = "It looks like you have a ";
+        String model; //String to provide color fragment
+
+        //getting arrays of each model and it's associated model numbers
+        String[] pure = a.getResources().getStringArray(R.array.pure_model_number_array);
+        String[] style = a.getResources().getStringArray(R.array.style_model_number_array);
+        String[] play = a.getResources().getStringArray(R.array.play_model_number_array);
+        String[] force = a.getResources().getStringArray(R.array.force_model_number_array);
+        String[] x13 = a.getResources().getStringArray(R.array.x13_model_number_array);
+        String[] x14 = a.getResources().getStringArray(R.array.x14_model_number_array);
+        Log.d("Model Number", name);
+
+        if (Arrays.asList(pure).contains(name)) {
+            model = "PURE";
+            s = s.concat("Moto X Pure Edition");
+        } else if (Arrays.asList(style).contains(name)) {
+            model = "STYLE";
+            s = s.concat("Moto X Style");
+        } else if (Arrays.asList(play).contains(name)) {
+            model = "PLAY";
+            s = s.concat("Moto X Play");
+        } else if (Arrays.asList(force).contains(name)) {
+            model = "FORCE";
+            s = s.concat("Moto X Force");
+        } else if (Arrays.asList(x13).contains(name)) {
+            model = "2013";
+            s = s.concat("Moto X 2013");
+        } else if (Arrays.asList(x14).contains(name)) {
+            model = "2014";
+            s = s.concat("Moto X 2014");
+        } else {
+            model = "PURE";
+            s = "It looks like you don't have a Moto X. That is OK";
+        }
+
+        saveDeviceConfig(a, stringToModel(model), "model", "MODEL");
+        s = s.concat(".\nContinue to configure your colors.\n\n");
+        Log.d("Device Name", model);
+        return s;
     }
 
     /**
@@ -131,7 +223,6 @@ public class Utils {
         SharedPreferences sharedPref = a.getSharedPreferences("FIRST", Context.MODE_PRIVATE);
         return sharedPref.getBoolean("first", true);
     }
-
 
     /*****************************************************************************
      * Saving
@@ -396,62 +487,6 @@ public class Utils {
      *****************************************************************************/
 
     /**
-     * Gets device name and returns string for the intro activity
-     *
-     * @return finished sentence saying the recognized device
-     */
-    public static String getDeviceNameString(Activity a) {
-        String name = DeviceName.getDeviceName();
-        String code = DeviceName.getDeviceInfo(a).model;
-        String s = "It looks like you have a ";
-        String model;
-        Log.d("code", code);
-        //Pure Edition is a special case, because recognized as a Style
-        if (code.equals("XT1575")) {
-            model = "PURE";
-            s = s.concat("Moto X Pure Edition");
-        } else {
-            switch (name) {
-                case "Moto X Style":
-                    model = "PURE";
-                    s = s.concat(name);
-                    break;
-                case "Moto X Play":
-                    model = "PLAY";
-                    s = s.concat(name);
-                    break;
-                case "Moto X Force":
-                    model = "FORCE";
-                    s = s.concat(name);
-                    break;
-                case "Moto X 2013":
-                    model = "2013";
-                    s = s.concat(name);
-                    break;
-                case "Moto X 2014":
-                    model = "2014";
-                    s = s.concat(name);
-                    break;
-                case "Droid Turbo 2":
-                    model = "FORCE";
-                    s = s.concat(", which is basically a Moto X Force");
-                    break;
-                case "Droid Maxx 2":
-                    model = "PLAY";
-                    s = s.concat(", which is basically a Moto X Play");
-                    break;
-                default:
-                    model = "PURE";
-                    s = "It doesn't look like you have a Moto X";
-            }
-        }
-        saveDeviceConfig(a, stringToModel(model), "model", "MODEL");
-        s = s.concat(".\nContinue to configure your colors.\n\n");
-        Log.d("Device Name", name);
-        return s;
-    }
-
-    /**
      * Converts a model string into an int for the spinner position in color selection
      *
      * @param model model string
@@ -475,31 +510,36 @@ public class Utils {
         return 0;
     }
 
-    //TODO: get actual value, if possible
-    public static int getDeviceResWidth(Context context) {
-        int width = 0;
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(metrics);
-        Display display = wm.getDefaultDisplay();
-        int density = metrics.densityDpi;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            display.getRealMetrics(metrics);
-
-            width = metrics.widthPixels;
+    /**
+     * Converts integer position in spinner to a String
+     *
+     * @param model the integer position
+     * @return model string
+     */
+    public static String modelToString(int model) {
+        String modelString = "";
+        switch (model) {
+            case 0:
+                modelString = "PURE";
+                break;
+            case 1:
+                modelString = "STYLE";
+                break;
+            case 2:
+                modelString = "PLAY";
+                break;
+            case 3:
+                modelString = "FORCE";
+                break;
+            case 4:
+                modelString = "2014";
+                break;
+            case 5:
+                modelString = "2013";
+                break;
+            default:
         }
-        Log.d("DEVICE WIDTH", "" + width);
-        return width;
-    }
-
-    //TODO: get actual value, if possible
-    public static int getDeviceResHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(metrics);
-        int density = metrics.densityDpi;
-        Log.d("DEVICE HEIGHT", "" + (density / 160) * metrics.heightPixels);
-        return (density / 160) * metrics.heightPixels;
+        return modelString;
     }
 
     /**
@@ -517,5 +557,33 @@ public class Utils {
             intArray[i++] = ContextCompat.getColor(context, integer);
 
         return intArray;
+    }
+
+    /**
+     * Use Glide to apply a drawable to an ImageView
+     *
+     * @param iv the ImageView to apply to
+     * @param d  the drawable to apply
+     */
+    public static void applyImageToView(Context c, ImageView iv, Drawable d) {
+        Glide.with(c)
+                .load("") //load doesn't support drawables?
+                .placeholder(d)
+                .centerCrop()
+                .crossFade()
+                .into(iv);
+    }
+
+    /**
+     * Use Glide to apply a drawable integer to an ImageView
+     *
+     * @param iv the ImageView to apply to
+     * @param d  the drawable integer to apply
+     */
+    public static void applyImageToView(Context c, ImageView iv, int d) {
+        Glide.with(c)
+                .load(d)
+                .fitCenter()
+                .into(iv);
     }
 }

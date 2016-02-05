@@ -9,7 +9,6 @@
         <item>Moto X Force</item>
         <item>Moto X 2014</item>
         <item>Moto X 2013</item>
-
     </string-array>
 
     <!-- Wallpaper Category / Theme names-->
@@ -45,4 +44,6 @@
         <item>Back Color</item>
         <item>Accent Color</item>
     </string-array>
+
+
 </resources>

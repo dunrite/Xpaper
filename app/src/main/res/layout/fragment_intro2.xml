@@ -28,12 +28,12 @@
         android:layout_weight="5">
 
         <ImageView
+            android:id="@+id/devices"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:src="@drawable/intro_devices" />
+            android:paddingRight="32dp" />
     </LinearLayout>
 
     <TextView

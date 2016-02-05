@@ -12,11 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.Theme;
 import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.utility.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -123,8 +123,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Picasso.with(holder.context).load(myThemes.get(position).getThumbnail())
-                //.transform(new FitToTargetViewTransformation(holder.container))
+        Glide.with(holder.context).load(myThemes.get(position).getThumbnail())
+                .fitCenter()
                 .into(holder.mImageView);
 
         holder.mTextView.setText(catName);

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dunrite.xpaper.R;
@@ -42,9 +43,25 @@ public class IntroSlide extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(layoutResId, container, false);
-        if (layoutResId == R.layout.fragment_intro4) {
-            TextView desc = (TextView) rootView.findViewById(R.id.desc);
-            desc.setText(Utils.getDeviceNameString(getActivity()));
+        switch (layoutResId) {
+            case R.layout.fragment_intro1:
+                ImageView logo = (ImageView) rootView.findViewById(R.id.logo);
+                Utils.applyImageToView(getActivity(), logo, R.drawable.intro_x);
+                break;
+            case R.layout.fragment_intro2:
+                ImageView devices = (ImageView) rootView.findViewById(R.id.devices);
+                Utils.applyImageToView(getActivity(), devices, R.drawable.intro_devices);
+                break;
+            case R.layout.fragment_intro3:
+                ImageView res = (ImageView) rootView.findViewById(R.id.resolution);
+                Utils.applyImageToView(getActivity(), res, R.drawable.intro_resolution);
+                break;
+            case R.layout.fragment_intro4:
+                TextView desc = (TextView) rootView.findViewById(R.id.desc);
+                ImageView colorWheel = (ImageView) rootView.findViewById(R.id.color_wheel);
+                desc.setText(Utils.getDeviceNameString(getActivity()));
+                Utils.applyImageToView(getActivity(), colorWheel, R.drawable.intro_colors);
+                break;
         }
         return rootView;
     }

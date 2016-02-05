@@ -1,6 +1,5 @@
 package com.dunrite.xpaper.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -70,8 +69,6 @@ public class ColorsFragment extends Fragment {
 
         //FAB only for initial setup after intro activity
         introFAB = (FloatingActionButton) rootView.findViewById(R.id.introFAB);
-
-        sp = getActivity().getSharedPreferences("PrefOne", Context.MODE_PRIVATE);
 
         //instantiate color circles
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
@@ -263,7 +260,7 @@ public class ColorsFragment extends Fragment {
      * and inserts them into 'list'
      */
     public void fetchBackColors(ArrayList<Integer> list, int modelNumber) {
-        String modelString = modelToString(modelNumber);
+        String modelString = Utils.modelToString(modelNumber);
 
         Field[] ID_Fields = R.color.class.getFields();
         for (int i = 0; i < ID_Fields.length; i++) {
@@ -288,7 +285,7 @@ public class ColorsFragment extends Fragment {
      * and inserts them into 'list'
      */
     public void fetchAccentColors(ArrayList<Integer> list, int modelNumber) {
-        String modelString = modelToString(modelNumber);
+        String modelString = Utils.modelToString(modelNumber);
 
         Field[] ID_Fields = R.color.class.getFields();
         for (int i = 0; i < ID_Fields.length; i++) {
@@ -376,45 +373,7 @@ public class ColorsFragment extends Fragment {
         }
         Drawable combinedImg = Utils.combineImages(back, accent, deviceMisc,
                 Utils.getBackColor(getActivity()), Utils.getAccentColor(getActivity()), "device", getContext());
-        devicePrev.setImageDrawable(combinedImg);
+        Utils.applyImageToView(getContext(), devicePrev, combinedImg);
     }
-
-
-    /*****************************************************************************
-     * The rest
-     *****************************************************************************/
-
-    /**
-     * Converts integer position in spinner to a String
-     *
-     * @param model the integer position
-     * @return model string
-     */
-    private String modelToString(int model) {
-        String modelString = "";
-        switch (model) {
-            case 0:
-                modelString = "PURE";
-                break;
-            case 1:
-                modelString = "PURE"; //The Style is essentially the same as the Pure
-                break;
-            case 2:
-                modelString = "PLAY";
-                break;
-            case 3:
-                modelString = "FORCE";
-                break;
-            case 4:
-                modelString = "2014";
-                break;
-            case 5:
-                modelString = "2013";
-                break;
-            default:
-        }
-        return modelString;
-    }
-
 
 }

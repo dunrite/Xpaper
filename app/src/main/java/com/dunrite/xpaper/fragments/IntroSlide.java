@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.dunrite.xpaper.R;
+import com.dunrite.xpaper.utility.Utils;
 
 public class IntroSlide extends Fragment {
 
@@ -37,7 +41,12 @@ public class IntroSlide extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(layoutResId, container, false);
+        View rootView = inflater.inflate(layoutResId, container, false);
+        if (layoutResId == R.layout.fragment_intro4) {
+            TextView desc = (TextView) rootView.findViewById(R.id.desc);
+            desc.setText(Utils.getDeviceNameString(getActivity()));
+        }
+        return rootView;
     }
 
 }

@@ -1,8 +1,12 @@
 package com.dunrite.xpaper.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import android.widget.Spinner;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.xpaper.R;
 import com.dunrite.xpaper.activities.ColorsActivity;
+import com.dunrite.xpaper.activities.EditorActivity;
 import com.dunrite.xpaper.utility.Utils;
 
 import java.lang.reflect.Field;
@@ -28,8 +33,10 @@ import java.util.Random;
  */
 public class ColorsFragment extends Fragment {
     Button frontButton, backButton, accentButton, shuffleButton;
+    FloatingActionButton introFAB;
     ImageView frontCirc, backCirc, accCirc, devicePrev;
     Spinner modelSpinner;
+    SharedPreferences sp;
     ArrayList<Integer> bColors = new ArrayList<>();
     ArrayList<Integer> aColors = new ArrayList<>();
     int[] front = {Color.BLACK, Color.WHITE};
@@ -61,6 +68,11 @@ public class ColorsFragment extends Fragment {
         accentButton = (Button) rootView.findViewById(R.id.accent_button);
         shuffleButton = (Button) rootView.findViewById(R.id.random_button);
 
+        //FAB only for initial setup after intro activity
+        introFAB = (FloatingActionButton) rootView.findViewById(R.id.introFAB);
+
+        sp = getActivity().getSharedPreferences("PrefOne", Context.MODE_PRIVATE);
+
         //instantiate color circles
         frontCirc = (ImageView) rootView.findViewById(R.id.front_circle);
         backCirc = (ImageView) rootView.findViewById(R.id.back_circle);
@@ -83,13 +95,22 @@ public class ColorsFragment extends Fragment {
         backButton.setOnClickListener(bHandler);
         accentButton.setOnClickListener(aHandler);
         shuffleButton.setOnClickListener(sHandler);
+        introFAB.setOnClickListener(fabHandler);
 
         model = Utils.getModel(getActivity());
+
 
         colorPreviews();
         //initialize circle previews
         resetColors();
         colorBackPreview();
+
+        //first launch after intro
+        if (Utils.isFirstLaunch(getActivity())) {
+            randomizeConfig();
+        } else {
+            introFAB.setVisibility(View.GONE);
+        }
 
         return rootView;
     }
@@ -98,6 +119,19 @@ public class ColorsFragment extends Fragment {
     /*****************************************************************************
      * OnClickListeners
      *****************************************************************************/
+
+    /**
+     * fabHandler
+     * OnClickListener for floating action button
+     */
+    View.OnClickListener fabHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            Utils.appHasLaunched(getActivity());
+            Intent intent = new Intent(getContext(), EditorActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.stay_still, R.anim.pull_out_top);
+        }
+    };
 
     /**
      * fHandler
@@ -381,4 +415,6 @@ public class ColorsFragment extends Fragment {
         }
         return modelString;
     }
+
+
 }

@@ -56,10 +56,7 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
 
         //Starts IntroActivity if this is the first launch of app
-        if (!sp.getBoolean("first", false)) {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("first", true);
-            editor.apply();
+        if (Utils.isFirstLaunch(this)) {
             Intent intent = new Intent(this, IntroActivity.class); //call Intro class
             startActivity(intent);
         }
@@ -95,6 +92,9 @@ public class EditorActivity extends AppCompatActivity implements ColorChooserDia
         updatePreview();
     }
 
+    /**
+     * Sets custom logo on recent app menu card
+     */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setRecentsStyle() {
         Bitmap recentsIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_recents);

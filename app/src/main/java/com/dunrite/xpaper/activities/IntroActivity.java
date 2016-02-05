@@ -18,7 +18,7 @@ public class IntroActivity extends AppIntro2 {
         addSlide(IntroSlide.newInstance(R.layout.fragment_intro1));
         addSlide(IntroSlide.newInstance(R.layout.fragment_intro2));
         addSlide(IntroSlide.newInstance(R.layout.fragment_intro3));
-        addSlide(IntroSlide.newInstance(R.layout.fragment_colors));
+        addSlide(IntroSlide.newInstance(R.layout.fragment_intro4));
 
         setVibrate(true);
         setVibrateIntensity(30);
@@ -26,7 +26,7 @@ public class IntroActivity extends AppIntro2 {
 
     @Override
     public void onDonePressed() {
-        Intent intent = new Intent(this, EditorActivity.class); //call Intro class
+        Intent intent = new Intent(this, ColorsActivity.class); //call Intro class
         startActivity(intent);
     }
 

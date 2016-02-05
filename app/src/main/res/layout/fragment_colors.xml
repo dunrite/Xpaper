@@ -95,5 +95,15 @@
             android:layout_below="@+id/accent_button"
             android:layout_centerHorizontal="true" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/introFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_done_24dp" />
     </RelativeLayout>
+
+
 </LinearLayout>

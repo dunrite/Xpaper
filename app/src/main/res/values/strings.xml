@@ -13,14 +13,13 @@
     <string name="accent_color">Accent Color</string>
 
     <string name="made_with_love">Jaxon Wright\nChad Teitsma</string>
-    <string name="opensource">AppIntro by Paolo Rotolo\nMaterial Dialogs by Aidan Follestad\nPicasso by Square Up</string>
+    <string name="opensource">AppIntro by Paolo Rotolo\nMaterial Dialogs by Aidan Follestad
+        \nPicasso by Square Up\nAndroid Device Names by Jared Drummler</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="color_settings">Color Settings</string>
     <string name="placeholder_text">placeholder text</string>
     <string name="wallpaper_preview">Wallpaper Preview</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="device_colors">Device Colors</string>
     <string name="colors">Colors</string>
     <string name="background">Background</string>

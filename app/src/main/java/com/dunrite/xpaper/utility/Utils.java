@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.jaredrummler.android.device.DeviceName;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -119,6 +121,17 @@ public class Utils {
         return sharedPref.getBoolean("premium", false);
     }
 
+    /**
+     * Returns whether or not this is the first time the app has been opened
+     *
+     * @param a current activity
+     * @return if first launch or not
+     */
+    public static boolean isFirstLaunch(Activity a) {
+        SharedPreferences sharedPref = a.getSharedPreferences("FIRST", Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("first", true);
+    }
+
 
     /*****************************************************************************
      * Saving
@@ -136,6 +149,16 @@ public class Utils {
         SharedPreferences sharedPref = a.getSharedPreferences(pref, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(type, param);
+        editor.apply();
+    }
+
+    /**
+     * App has been launched, set first to false
+     */
+    public static void appHasLaunched(Activity a) {
+        SharedPreferences sharedPref = a.getSharedPreferences("FIRST", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("first", false);
         editor.apply();
     }
 
@@ -371,6 +394,86 @@ public class Utils {
     /*****************************************************************************
      * Misc
      *****************************************************************************/
+
+    /**
+     * Gets device name and returns string for the intro activity
+     *
+     * @return finished sentence saying the recognized device
+     */
+    public static String getDeviceNameString(Activity a) {
+        String name = DeviceName.getDeviceName();
+        String code = DeviceName.getDeviceInfo(a).model;
+        String s = "It looks like you have a ";
+        String model;
+        Log.d("code", code);
+        //Pure Edition is a special case, because recognized as a Style
+        if (code.equals("XT1575")) {
+            model = "PURE";
+            s = s.concat("Moto X Pure Edition");
+        } else {
+            switch (name) {
+                case "Moto X Style":
+                    model = "PURE";
+                    s = s.concat(name);
+                    break;
+                case "Moto X Play":
+                    model = "PLAY";
+                    s = s.concat(name);
+                    break;
+                case "Moto X Force":
+                    model = "FORCE";
+                    s = s.concat(name);
+                    break;
+                case "Moto X 2013":
+                    model = "2013";
+                    s = s.concat(name);
+                    break;
+                case "Moto X 2014":
+                    model = "2014";
+                    s = s.concat(name);
+                    break;
+                case "Droid Turbo 2":
+                    model = "FORCE";
+                    s = s.concat(", which is basically a Moto X Force");
+                    break;
+                case "Droid Maxx 2":
+                    model = "PLAY";
+                    s = s.concat(", which is basically a Moto X Play");
+                    break;
+                default:
+                    model = "PURE";
+                    s = "It doesn't look like you have a Moto X";
+            }
+        }
+        saveDeviceConfig(a, stringToModel(model), "model", "MODEL");
+        s = s.concat(".\nContinue to configure your colors.\n\n");
+        Log.d("Device Name", name);
+        return s;
+    }
+
+    /**
+     * Converts a model string into an int for the spinner position in color selection
+     *
+     * @param model model string
+     * @return spinner position
+     */
+    public static int stringToModel(String model) {
+        switch (model) {
+            case "PURE":
+                return 0;
+            case "STYLE":
+                return 1;
+            case "PLAY":
+                return 2;
+            case "FORCE":
+                return 3;
+            case "2014":
+                return 4;
+            case "2013":
+                return 5;
+        }
+        return 0;
+    }
 
     //TODO: get actual value, if possible
     public static int getDeviceResWidth(Context context) {

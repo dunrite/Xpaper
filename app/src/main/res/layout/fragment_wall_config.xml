@@ -65,7 +65,7 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/misc_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,6 +103,21 @@
 
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>-->
 
+    <ImageView
+        android:id="@+id/soon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/color_card"
+        android:src="@drawable/ic_update_black_24dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/soon"
+        android:textAlignment="center"
+        android:text="@string/more_options" />
 </RelativeLayout>

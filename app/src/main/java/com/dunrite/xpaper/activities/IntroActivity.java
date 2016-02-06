@@ -39,4 +39,9 @@ public class IntroActivity extends AppIntro2 {
     public void onSlideChanged() {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //DOn't allow user to exit intro this way
+    }
 }

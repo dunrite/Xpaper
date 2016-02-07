@@ -266,6 +266,7 @@ public class ColorsFragment extends Fragment {
         for (int i = 0; i < ID_Fields.length; i++) {
             String curr = ID_Fields[i].toString();
             if ("PURE".equals(modelString) && curr.contains("pure_") ||
+                    "STYLE".equals(modelString) && curr.contains("pure_") ||
                     "2014".equals(modelString) && curr.contains("x14_") ||
                     "2013".equals(modelString) && curr.contains("x13_") ||
                     "FORCE".equals(modelString) && curr.contains("force_") ||
@@ -291,6 +292,7 @@ public class ColorsFragment extends Fragment {
         for (int i = 0; i < ID_Fields.length; i++) {
             String curr = ID_Fields[i].toString();
             if ("PURE".equals(modelString) && curr.contains("purea_") ||
+                    "STYLE".equals(modelString) && curr.contains("purea_") ||
                     "2014".equals(modelString) && curr.contains("x14a_") ||
                     "2013".equals(modelString) && curr.contains("x13a_") ||
                     "FORCE".equals(modelString) && curr.contains("forcea_") ||

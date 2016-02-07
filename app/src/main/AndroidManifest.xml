@@ -7,7 +7,7 @@
     <!-- To apply wallpaper-->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <!-- To allow for premium users-->
-    <uses-permission android:name="android.vending.BILLING" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"

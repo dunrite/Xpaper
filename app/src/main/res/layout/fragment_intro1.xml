@@ -34,6 +34,13 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp" />
+
+        <ImageView
+            android:id="@+id/dunrite"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:padding="16dp" />
     </LinearLayout>
 
     <TextView

@@ -46,7 +46,9 @@ public class IntroSlide extends Fragment {
         switch (layoutResId) {
             case R.layout.fragment_intro1:
                 ImageView logo = (ImageView) rootView.findViewById(R.id.logo);
+                ImageView dunrite = (ImageView) rootView.findViewById(R.id.dunrite);
                 Utils.applyImageToView(getActivity(), logo, R.drawable.intro_x);
+                Utils.applyImageToView(getActivity(), dunrite, R.drawable.dunriteappswhite);
                 break;
             case R.layout.fragment_intro2:
                 ImageView devices = (ImageView) rootView.findViewById(R.id.devices);

@@ -16,31 +16,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.EditorActivity"
+            android:name="com.dunrite.xpaper.activities.EditorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.IntroActivity"
+            android:name="com.dunrite.xpaper.activities.IntroActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AboutActivity"
+            android:name="com.dunrite.xpaper.activities.AboutActivity"
             android:label="@string/action_about"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.EditorActivity" />
+            android:parentActivityName="com.dunrite.xpaper.activities.EditorActivity" />
         <activity
-            android:name=".activities.ColorsActivity"
+            android:name="com.dunrite.xpaper.activities.ColorsActivity"
             android:label="@string/device_colors"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.EditorActivity" />
+            android:parentActivityName="com.dunrite.xpaper.activities.EditorActivity" />
     </application>
 
 </manifest>

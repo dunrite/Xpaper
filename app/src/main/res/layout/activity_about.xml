@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@id/appTitle"
                     android:layout_below="@id/appTitle"
-                    android:text="VERSION NUM HERE" />
+                    android:text="v#.#.#" />
 
                 <ImageView
                     android:id="@+id/a_dunrite_app"
@@ -78,7 +78,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="16dp"
-                    android:src="@drawable/adunriteapp" />
+                    android:src="@drawable/dunriteappsdark" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

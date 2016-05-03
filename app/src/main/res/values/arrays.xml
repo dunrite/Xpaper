@@ -18,6 +18,10 @@
         <item>Wing</item>
         <item>VVV</item>
         <item>Backslash</item>
+        <item>Poly Up</item>
+        <item>Poly Down</item>
+        <item>Poly X</item>
+        <item>Poly Star</item>
         <!--<item>#Premium Test Cat</item>-->
     </string-array>
 
@@ -27,6 +31,10 @@
         <item>@drawable/wingcat</item>
         <item>@drawable/vvvcat</item>
         <item>@drawable/backslashcat</item>
+        <item>@drawable/polyupcat</item>
+        <item>@drawable/polydowncat</item>
+        <item>@drawable/polyxcat</item>
+        <item>@drawable/polystarcat</item>
         <!--<item>@drawable/testcatblank</item>-->
     </array>
 
@@ -35,6 +43,10 @@
         <item>@drawable/wing_foreground</item>
         <item>@drawable/vvv_foreground</item>
         <item>@drawable/backslash_foreground</item>
+        <item>@drawable/polyup_foreground</item>
+        <item>@drawable/polydown_foreground</item>
+        <item>@drawable/polyx_foreground</item>
+        <item>@drawable/polystar_foreground</item>
         <!--<item>@drawable/basic_foreground</item>-->
     </array>
 

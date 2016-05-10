@@ -161,7 +161,6 @@ public class Utils {
         Bitmap cs, fg;
         Paint fgPaint = new Paint();
 
-
         //create bitmap from foreground drawable
         fg = ((BitmapDrawable) foreground).getBitmap();
 

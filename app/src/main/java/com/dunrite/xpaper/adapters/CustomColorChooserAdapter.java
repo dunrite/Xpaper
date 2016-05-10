@@ -1,6 +1,7 @@
 package com.dunrite.xpaper.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,13 +53,37 @@ public class CustomColorChooserAdapter extends BaseAdapter {
             v = convertView;
         }
 
-        ImageView img = (ImageView) v.findViewById(R.id.bg_image);
+        ImageView img = (ImageView) v.findViewById(R.id.circle);
+        ImageView outlineWhite = (ImageView) v.findViewById(R.id.selection_outline_white);
+
+        outlineWhite.setColorFilter(Color.WHITE);
 
         if (myDataset.get(position).getColor() != 0) {
-            img.setBackgroundColor(myDataset.get(position).getColor());
+            img.setColorFilter(myDataset.get(position).getColor());
         } else {
-            img.setImageDrawable(ContextCompat.getDrawable(context, myDataset.get(position).getTextureResId()));
+            img.setImageDrawable(ContextCompat.getDrawable(context, myDataset.get(position).getTextureIconResId()));
         }
+
+        if(myDataset.get(position).getSelected()) {
+            outlineWhite.setVisibility(View.VISIBLE);
+        } else {
+            outlineWhite.setVisibility(View.INVISIBLE);
+        }
+
+
+        //set up on click for selecting colors
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0; i<myDataset.size();i++){
+                    if(i==position)
+                        myDataset.get(i).setSelected(true);
+                    else
+                        myDataset.get(i).setSelected(false);
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         return v;
     }

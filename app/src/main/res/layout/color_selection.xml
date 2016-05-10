@@ -2,18 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_margin="2dp">
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/bg_image"
+        android:id="@+id/circle"
         android:src="@drawable/circle"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_width="56dp"
         android:layout_height="56dp" />
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/selection_outline"
-        android:src="@drawable/circle"
-        android:layout_width="56dp"
-        android:layout_height="56dp" />
+        android:id="@+id/selection_outline_white"
+        android:src="@drawable/color_selection_outline"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="46dp"
+        android:layout_height="46dp" />
+
+
 
 </RelativeLayout>

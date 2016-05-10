@@ -41,8 +41,11 @@
 
     <array name="pure_textures">
         <item>@drawable/texture_bamboo</item>
+        <item>@drawable/texture_bamboo_icon</item>
         <item>@drawable/texture_ebony</item>
+        <item>@drawable/texture_ebony_icon</item>
         <item>@drawable/texture_charcoal_ash</item>
+        <item>@drawable/texture_charcoal_ash_icon</item>
     </array>
 
     <!-- Color options for wallpaper editing-->

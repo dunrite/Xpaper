@@ -4,6 +4,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.xpaper.ColorSelection;
@@ -35,13 +38,11 @@ public class ColorsFragment extends Fragment {
     Button frontButton, backButton, accentButton, shuffleButton;
     ImageView frontCirc, backCirc, accCirc, devicePrev;
     Spinner modelSpinner;
-    ArrayList<Integer> bColors = new ArrayList<>();
-    ArrayList<Integer> bTextures = new ArrayList<>();
+    ArrayList<ColorSelection>  backColorSelections;
     ArrayList<Integer> aColors = new ArrayList<>();
 
     int[] front = {Color.BLACK, Color.WHITE};
     int[] accent;
-    int[] back;
     public static String lastPicked;
     int model;
     public ColorChooserDialog.Builder frontChooser;
@@ -49,7 +50,8 @@ public class ColorsFragment extends Fragment {
     public ColorChooserDialog.Builder accentChooser;
 
     private GridView mGrid;
-    View customView;
+    private View positiveAction;
+    private View customView;
 
     public ColorsFragment() {
         //mandatory empty constructor
@@ -118,7 +120,6 @@ public class ColorsFragment extends Fragment {
         public void onClick(View v) {
             frontChooser.show();
             lastPicked = "front";
-
         }
     };
 
@@ -188,40 +189,36 @@ public class ColorsFragment extends Fragment {
      * model they are using.
      */
     public void resetColors() {
-        bColors = new ArrayList<>();
-        bTextures = new ArrayList<>();
         aColors = new ArrayList<>();
+
         //fetch back colors and textures
-        fetchBackColors(bColors, bTextures, model);
-
-        //set up adapter for custom view
-        ArrayList<ColorSelection> colorSelections = new ArrayList<ColorSelection>();
-
-        //iterate through colors
-        back = Utils.toIntArray(bColors, getContext());
-        for (int i = 0; i < bColors.size(); i++) {
-            //0 means this is a color and not a texture
-            colorSelections.add(new ColorSelection(back[i], 0));
-        }
-        //iterate throuth textures
-        for (int i = 0; i < bTextures.size(); i++) {
-            //0 means this is a texture and not a color
-            colorSelections.add(new ColorSelection(0, bTextures.get(i)));
-        }
-
+        backColorSelections = new ArrayList<>();
+        fetchBackColors(backColorSelections, model);
 
         backChooser = new MaterialDialog.Builder(getContext())
                 .title(R.string.back_color)
-                        //TODO: Implement call back for ontouch
                 .customView(R.layout.dialog_color_chooser, false)
                 .negativeText("Cancel")
-                .positiveText("Done");
+                .positiveText("Done")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        //TODO: keep track of what was selected before and restore if they press cancel
+                        Snackbar.make(getView(),"Cancel was pressed",Snackbar.LENGTH_SHORT).show();
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    //TODO
+                                    Snackbar.make(getView(),"Done was pressed",Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
         MaterialDialog dialog = backChooser.build();
-
         //set our custom grid adapter
         customView = dialog.getCustomView();
         mGrid = (GridView) customView.findViewById(R.id.grid);
-        mGrid.setAdapter(new CustomColorChooserAdapter(getContext(), colorSelections, (ColorsActivity) getActivity()));
+        mGrid.setAdapter(new CustomColorChooserAdapter(getContext(), backColorSelections, (ColorsActivity) getActivity()));
 
 
         fetchAccentColors(aColors, model);
@@ -245,14 +242,15 @@ public class ColorsFragment extends Fragment {
         //use color lists to generate random selection
         Random rand = new Random();
         int randomAcc = rand.nextInt(accent.length);
-        int randomBack = rand.nextInt(back.length);
+        int randomBack = rand.nextInt(backColorSelections.size());
 
         //set circles to random in the list and save to configuration
         frontCirc.setColorFilter(front[0]);
-        backCirc.setColorFilter(back[randomBack]);
+        //TODO handle this for textures. Will always return 0 for texture
+        backCirc.setColorFilter(backColorSelections.get(randomBack).getColor());
         accCirc.setColorFilter(accent[randomAcc]);
         Utils.saveDeviceConfig(getActivity(), front[0], "front", "COLORS");
-        Utils.saveDeviceConfig(getActivity(), back[randomBack], "back", "COLORS");
+        Utils.saveDeviceConfig(getActivity(), backColorSelections.get(randomBack).getColor(), "back", "COLORS");
         Utils.saveDeviceConfig(getActivity(), accent[randomAcc], "accent", "COLORS");
         colorBackPreview();
     }
@@ -262,7 +260,7 @@ public class ColorsFragment extends Fragment {
      * gets all of the back color IDs for each color for specified 'model'
      * and inserts them into 'list'
      */
-    public void fetchBackColors(ArrayList<Integer> colors, ArrayList<Integer> textures, int modelNumber) {
+    public void fetchBackColors(ArrayList<ColorSelection> selections, int modelNumber) {
         String modelString = modelToString(modelNumber);
 
         Field[] ID_Fields = R.color.class.getFields();
@@ -274,7 +272,7 @@ public class ColorsFragment extends Fragment {
                     "FORCE".equals(modelString) && curr.contains("force_") ||
                     "PLAY".equals(modelString) && curr.contains("play_")) {
                 try {
-                    colors.add(ID_Fields[i].getInt(null));
+                    selections.add(new ColorSelection(ContextCompat.getColor(getContext(), ID_Fields[i].getInt(null)),0,0));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -289,8 +287,8 @@ public class ColorsFragment extends Fragment {
                 //add resource id's to our arrayList
                 int count = tArray.length();
                 int[] ids = new int[count];
-                for (int i = 0; i < ids.length; i++) {
-                    textures.add(tArray.getResourceId(i, 0));
+                for (int i = 0; i < ids.length; i+=2) {
+                    selections.add(new ColorSelection(0,tArray.getResourceId(i, 0),tArray.getResourceId(i+1, 0)));
                 }
                 break;
             case 1: //PURE

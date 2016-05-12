@@ -15,6 +15,6 @@
         tools:context=".activities.EditorActivity"
         tools:listitem="@layout/card"
         android:clipToPadding="false"
-        android:paddingTop="16dp" />
+        android:padding="8dp" />
 
 </RelativeLayout>
